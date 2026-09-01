@@ -80,9 +80,21 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
+  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -91,7 +103,7 @@ div.csl-indent {
 
 
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta column-page-left">
 
     
   
@@ -103,34 +115,36 @@ div.csl-indent {
 </header>
 
 
-<section id="lucas-alderfer-and-hunter-evans" class="level3 bio-card">
-<h3 class="anchored" data-anchor-id="lucas-alderfer-and-hunter-evans">Lucas Alderfer and Hunter Evans</h3>
+<div class="bio-card">
+<p><em>Lucas Alderfer and Hunter Evans</em></p>
+</div>
+<section id="readings" class="level4 readings">
+<h4 class="anchored" data-anchor-id="readings">Readings</h4>
+<ul>
+<li><p><span class="citation" data-cites="Morgan2022-hs">Morgan, Douthat, and Lin (<a href="#ref-Morgan2022-hs" role="doc-biblioref">2022</a>)</span></p>
+<p>This is the paper that we are basing our analysis on for the capstone. The goal is to take this paper’s data and add beefier statistical concepts. Our current ideas are Bayesian, hierarchical models, and maybe add a spatial component. This paper was written in 2022, and analyzed home prices given a multitude of different variables. The main focus of these being evacuation zone changes, and how it effected the home prices. Numerous other variables are in the model as well. The statistical concepts used were a basic OLS with a spatial error term and Difference in differences (DID). There were about 170,000 data points in the data they used, with the new data we have up to about 270,000. Results showed that a numerous of terms were significant from all areas including distance to shoreline, amenities, and race. The professor thinks that Bayesian can add to this analysis, and we further hypothesize allowing a term like evacuation zone to fluctuate with different slopes could strengthen our analysis.</p></li>
+<li><p><span class="citation" data-cites="Johnson2022-bd">Johnson, Ott, and Dogucu (<a href="#ref-Johnson2022-bd" role="doc-biblioref">2022</a>)</span></p>
+<p>This is the Bayes Rules text book that we will be basing our Bayesian Analysis on. Dr.&nbsp;Seals used it in the Applied Bayesian course, and since we are all comfortable with the package and the theory in this textbook we are going to use it in the paper. This book goes through a basic framework of Bayesian starting from the ground up, explaining at a basic what Bayesian is, and how to apply it to more advanced data. The book built its own package in R called bayesrules, which makes the use of Bayesian and explanation that much simpler. To tie this into our paper, the goal is to add a Bayesian model to allow for prior knowledge to seep through and allow for better estimations. Since our data is so large and has so many predictors, we hope that Bayesian can add an extra element to strengthen the analysis.</p></li>
+<li><p><span class="citation" data-cites="Chandra-Putra2020-pv">Chandra-Putra and Andrews (<a href="#ref-Chandra-Putra2020-pv" role="doc-biblioref">2020</a>)</span></p>
+<p>The article assesses real estate prices in two New Jersey towns after hurricane Sandy in 2012. They used an ABM computer simulation model to answer their research questions both about real estate prices in response to coastal flooding and to assess policies in place that may affect or be affected by these floods and aftermaths. They found that preemptive measures such as structural considerations and education had an impact on the amount of claims and fluctuations within the market. This article is helpful for our research because it suggests that spatial statistics may have a bigger impact on our project than originally included.</p></li>
+<li><p><span class="citation" data-cites="Bin2004-ty">Bin and Polasky (<a href="#ref-Bin2004-ty" role="doc-biblioref">2004</a>)</span></p>
+<p>This article has a similar assessment but for a town in North Carolina after hurricane Floyd. They use a “property price function” that is a least squares regression model to assess similar factors rather than a simulation. They overall found a house that is located within a floodplain has a lower cost than a similar and comparable house that is not located in a floodplain. They also found that the discount for existing in the floodplain was higher after hurricane Floyd than before. This article helped see how people are using OLS to model this area of research and compare it to the one used within the article we are expanding on.</p></li>
+</ul>
 </section>
-<section id="papers-read" class="level3 papers-read">
-<h3 class="anchored" data-anchor-id="papers-read">Papers Read</h3>
-<p>John Derek Morgan, Thomas Douthat &amp; Li-Hsiang Lin (2023) On the Geographic Balance of Risk and Amenity: Changes in Evacuation Zones and Their Ripples in Housing Prices in Pinellas County, FL, Papers in Applied Geography, 9:1, 49-69, DOI: 10.1080/23754931.2022.2100225</p>
-<p>Chandra‐Putra, H., &amp; Andrews, C. J. (2020). An integrated model of real estate market responses to coastal flooding. Journal of Industrial Ecology, 24(2), 424-435. doi:https://doi.org/10.1111/jiec.12957</p>
-<p>Bin, Okmyung, and Stephen Polasky. “Effects of Flood Hazards on Property Values: Evidence before and after Hurricane Floyd.” Land Economics, vol.&nbsp;80, no. 4, 2004, pp.&nbsp;490–500. JSTOR, https://doi.org/10.2307/3655805. Accessed 1 Sept.&nbsp;2026.</p>
-<p>Johnson, A. A., Ott, M. Q., &amp; Dogucu, M. (2022). Bayes Rules!: An Introduction to Applied Bayesian Modeling (1st ed.). Chapman and Hall/CRC. https://doi.org/10.1201/9780429288340</p>
+<section id="abstract" class="level3 abstract">
+<h3 class="anchored" data-anchor-id="abstract">Abstract</h3>
 </section>
-<section id="reading" class="level4 cites-card">
-<h4 class="anchored" data-anchor-id="reading">Reading</h4>
-<ul>
-<li><span class="citation" data-cites="Morgan2022-hs">Morgan, Douthat, and Lin (<a href="#ref-Morgan2022-hs" role="doc-biblioref">2022</a>)</span></li>
-</ul>
-<p>This is the paper that we are basing our analysis on for the capstone. The goal is to take this paper’s data and add beefier statistical concepts. Our current ideas are Bayesian, hierarchical models, and maybe add a spatial component. This paper was written in 2022, and analyzed home prices given a multitude of different variables. The main focus of these being evacuation zone changes, and how it effected the home prices. Numerous other variables are in the model as well. The statistical concepts used were a basic OLS with a spatial error term and Difference in differences (DID). There were about 170,000 data points in the data they used, with the new data we have up to about 270,000. Results showed that a numerous of terms were significant from all areas including distance to shoreline, amenities, and race. The professor thinks that Bayesian can add to this analysis, and we further hypothesize allowing a term like evacuation zone to fluctuate with different slopes could strengthen our analysis.</p>
-<ul>
-<li><span class="citation" data-cites="Johnson2022-bd">Johnson, Ott, and Dogucu (<a href="#ref-Johnson2022-bd" role="doc-biblioref">2022</a>)</span></li>
-</ul>
-<p>This is the Bayes Rules text book that we will be basing our Bayesian Analysis on. Dr.&nbsp;Seals used it in the Applied Bayesian course, and since we are all comfortable with the package and the theory in this textbook we are going to use it in the paper. This book goes through a basic framework of Bayesian starting from the ground up, explaining at a basic what Bayesian is, and how to apply it to more advanced data. The book built its own package in R called bayesrules, which makes the use of Bayesian and explanation that much simpler. To tie this into our paper, the goal is to add a Bayesian model to allow for prior knowledge to seep through and allow for better estimations. Since our data is so large and has so many predictors, we hope that Bayesian can add an extra element to strengthen the analysis.</p>
-<ul>
-<li><span class="citation" data-cites="Chandra-Putra2020-pv">Chandra-Putra and Andrews (<a href="#ref-Chandra-Putra2020-pv" role="doc-biblioref">2020</a>)</span></li>
-</ul>
-<p>The article assesses real estate prices in two New Jersey towns after hurricane Sandy in 2012. They used an ABM computer simulation model to answer their research questions both about real estate prices in response to coastal flooding and to assess policies in place that may affect or be affected by these floods and aftermaths. They found that preemptive measures such as structural considerations and education had an impact on the amount of claims and fluctuations within the market. This article is helpful for our research because it suggests that spatial statistics may have a bigger impact on our project than originally included.</p>
-<ul>
-<li><span class="citation" data-cites="Bin2004-ty">Bin and Polasky (<a href="#ref-Bin2004-ty" role="doc-biblioref">2004</a>)</span></li>
-</ul>
-<p>This article has a similar assessment but for a town in North Carolina after hurricane Floyd. They use a “property price function” that is a least squares regression model to assess similar factors rather than a simulation. They overall found a house that is located within a floodplain has a lower cost than a similar and comparable house that is not located in a floodplain. They also found that the discount for existing in the floodplain was higher after hurricane Floyd than before. This article helped see how people are using OLS to model this area of research and compare it to the one used within the article we are expanding on.</p>
+<section id="introduction" class="level3 introduction">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+</section>
+<section id="methods" class="level3 methods">
+<h3 class="anchored" data-anchor-id="methods">Methods</h3>
+</section>
+<section id="results-and-discussion" class="level3 res-discuss">
+<h3 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h3>
+</section>
+<section id="conclusion" class="level3 conc">
+<h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
 </section>
 
 
