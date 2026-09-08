@@ -70,6 +70,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -84,8 +113,7 @@ div.csl-indent {
     <h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-  <li><a href="#readings" id="toc-readings" class="nav-link active" data-scroll-target="#readings">Readings</a></li>
-  <li><a href="#abstract" id="toc-abstract" class="nav-link" data-scroll-target="#abstract">Abstract</a></li>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a></li>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
   <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a></li>
@@ -122,8 +150,25 @@ div.csl-indent {
 <div class="bio-card">
 <p><strong>Lucas Alderfer and Hunter Evans</strong></p>
 </div>
-<section id="readings" class="level3 readings">
-<h3 class="anchored" data-anchor-id="readings">Readings</h3>
+<div class="readings">
+<section id="most-recent-readings" class="level3">
+<h3 class="anchored" data-anchor-id="most-recent-readings">Most Recent Readings</h3>
+<ul>
+<li><p><span class="citation" data-cites="galecki2013">Galecki and Burzykowski (<a href="#ref-galecki2013" role="doc-biblioref">2013</a>)</span></p>
+<p>This text provides a practical, step-by-step guide to fitting linear mixed-effects (LME) models using R, primarily leveraging the nlme and lme4 packages. It systematically bridges classical linear regression with mixed-effects frameworks, focusing on model formulation, estimation methods (such as Maximum Likelihood and Restricted Maximum Likelihood), and diagnostics for complex data structures.</p></li>
+</ul>
+<p>This book serves as a core reference for hierarchical and multilevel data modeling. It details how to handle nested, repeated-measures, and clustered structures by incorporating both fixed and random effects. Citing this text validates the foundational rules of hierarchical linear models, random intercepts, random slopes, and the explicit modeling of within-group variation.</p>
+<ul>
+<li><p><span class="citation" data-cites="anselin1988spatial">Anselin (<a href="#ref-anselin1988spatial" role="doc-biblioref">1988</a>)</span></p>
+<p>Luc Anselin’s foundational text formally introduced spatial econometrics as a distinct field within regional science and quantitative geography. The book establishes the theoretical framework required to model spatial dependence (where observations in one location affect nearby locations) and spatial heterogeneity (where statistical relationships vary across space). It covers spatial autoregressive processes, diagnostic tests for spatial autocorrelation, and estimation techniques like Maximum Likelihood.This text provides the seminal spatial facts and methodological rules for geographically arranged data. Utilizing Anselin’s principles establishes fundamental concepts such as spatial weight matrices (<span class="math inline">\(W\)</span>), spatial lag models, and spatial error models. These frameworks ensure spatial structure and spatial autocorrelation are properly accounted for rather than treated as simple independence violations.</p></li>
+<li><p><span class="citation" data-cites="LeSage_Pace_2017">LeSage and Pace (<a href="#ref-LeSage_Pace_2017" role="doc-biblioref">2017</a>)</span></p>
+<p>LeSage’s article discusses the misrepresentations coefficients and can produce when assessing spatial models and address shortcomings of their previous research. They instead choose to approach economic data with a Monte Carlo method study and produce a demonstration about the issues of previous approaches and how Monte Carlo circumvents them. For their Monte Carlo instructional they include a branch of Bayesian approach. They conclude that more attention needs to have been brought to the direct and indirect effects estimates and further Monte Carlo practices should consider this for spatial models.</p></li>
+<li><p><span class="citation" data-cites="Walls_Magliocca_McConnell_2018">Walls, Magliocca, and McConnell (<a href="#ref-Walls_Magliocca_McConnell_2018" role="doc-biblioref">2018</a>)</span></p>
+<p>This paper assesses a spatial simulation model of coastal real estate and addressing the influence of storms and amenities (rec access, aesthetics, views, etc). Their model is parameterized to eastern US regions that experience hurricanes at a low rate and then is evaluated to see how spatial patterns of development would change if the frequency of storms was increased. They found that significantly increasing the probability of a hurricane did not change the spatial patterns of development in a meaningful way. If their low hurricane region’s storm possibility was increased to match that of states facing the Gulf of Mexico and all else equal, they found that development continued over time. They found coastal amenities to impact location patterns more. These findings may be important when considering how our own model behaves as Pinellas county is in South Florida and heavily impacted by hurricanes.</p></li>
+</ul>
+</section>
+<section id="previous-readings" class="level3">
+<h3 class="anchored" data-anchor-id="previous-readings">Previous Readings</h3>
 <ul>
 <li><p><span class="citation" data-cites="Morgan2022-hs">Morgan, Douthat, and Lin (<a href="#ref-Morgan2022-hs" role="doc-biblioref">2022</a>)</span></p>
 <p>This is the paper that we are basing our analysis on for the capstone. The goal is to take this paper’s data and add beefier statistical concepts. Our current ideas are Bayesian, hierarchical models, and maybe add a spatial component. This paper was written in 2022, and analyzed home prices given a multitude of different variables. The main focus of these being evacuation zone changes, and how it effected the home prices. Numerous other variables are in the model as well. The statistical concepts used were a basic OLS with a spatial error term and Difference in differences (DID). There were about 170,000 data points in the data they used, with the new data we have up to about 270,000. Results showed that a numerous of terms were significant from all areas including distance to shoreline, amenities, and race. The professor thinks that Bayesian can add to this analysis, and we further hypothesize allowing a term like evacuation zone to fluctuate with different slopes could strengthen our analysis.</p></li>
@@ -135,9 +180,9 @@ div.csl-indent {
 <p>This article has a similar assessment but for a town in North Carolina after hurricane Floyd. They use a “property price function” that is a least squares regression model to assess similar factors rather than a simulation. They overall found a house that is located within a floodplain has a lower cost than a similar and comparable house that is not located in a floodplain. They also found that the discount for existing in the floodplain was higher after hurricane Floyd than before. This article helped see how people are using OLS to model this area of research and compare it to the one used within the article we are expanding on.</p></li>
 </ul>
 </section>
+</div>
 <section id="abstract" class="level3 abstract">
 <h3 class="anchored" data-anchor-id="abstract">Abstract</h3>
-<p>Abstract</p>
 </section>
 <section id="introduction" class="level3 introduction">
 <h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
@@ -156,17 +201,29 @@ div.csl-indent {
 
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-anselin1988spatial" class="csl-entry" role="listitem">
+Anselin, Luc. 1988. <em>Spatial Econometrics: Methods and Models</em>. Vol. 2. Dordrecht: Kluwer Academic Publishers.
+</div>
 <div id="ref-Bin2004-ty" class="csl-entry" role="listitem">
 Bin, Okmyung, and Stephen Polasky. 2004. <span>“Effects of Flood Hazards on Property Values: Evidence Before and After Hurricane Floyd.”</span> <em>Land Econ.</em> 80 (4): 490.
 </div>
 <div id="ref-Chandra-Putra2020-pv" class="csl-entry" role="listitem">
 Chandra-Putra, Handi, and Clinton J Andrews. 2020. <span>“An Integrated Model of Real Estate Market Responses to Coastal Flooding.”</span> <em>J. Ind. Ecol.</em> 24 (2): 424–35.
 </div>
+<div id="ref-galecki2013" class="csl-entry" role="listitem">
+Galecki, Andrzej, and Tomasz Burzykowski. 2013. <em>Linear Mixed-Effects Models Using r: A Step-by-Step Approach</em>. First. New York: Springer. <a href="https://link.springer.com/book/10.1007/978-1-4614-3900-4">https://link.springer.com/book/10.1007/978-1-4614-3900-4</a>.
+</div>
 <div id="ref-Johnson2022-bd" class="csl-entry" role="listitem">
 Johnson, Alicia A, Miles Q Ott, and Mine Dogucu. 2022. <em>Bayes Rules!</em> Boca Raton: Chapman; Hall/CRC.
 </div>
+<div id="ref-LeSage_Pace_2017" class="csl-entry" role="listitem">
+LeSage, James P., and R. Kelley Pace. 2017. <span>“Spatial Econometric Monte Carlo Studies: Raising the Bar.”</span> <em>Empirical Economics</em> 55 (1): 17–34. <a href="https://doi.org/10.1007/s00181-017-1330-6">https://doi.org/10.1007/s00181-017-1330-6</a>.
+</div>
 <div id="ref-Morgan2022-hs" class="csl-entry" role="listitem">
 Morgan, John Derek, Thomas Douthat, and Li-Hsiang Lin. 2022. <span>“On the Geographic Balance of Risk and Amenity: Changes in Evacuation Zones and Their Ripples in Housing Prices in Pinellas County, <span>FL</span>.”</span> <em>Pap. Appl. Geogr.</em>, July, 1–20.
+</div>
+<div id="ref-Walls_Magliocca_McConnell_2018" class="csl-entry" role="listitem">
+Walls, Margaret, Nicholas Magliocca, and Virginia McConnell. 2018. <span>“Modeling Coastal Land and Housing Markets: Understanding the Competing Influences of Amenities and Storm Risks.”</span> <em>Ocean &amp;Amp; Coastal Management</em> 157 (May): 95–110. <a href="https://doi.org/10.1016/j.ocecoaman.2018.01.021">https://doi.org/10.1016/j.ocecoaman.2018.01.021</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
