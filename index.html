@@ -153,6 +153,13 @@ window.Quarto = {
 <div class="readings">
 <section id="most-recent-readings" class="level3">
 <h3 class="anchored" data-anchor-id="most-recent-readings">Most Recent Readings</h3>
+<p><strong>- <span class="citation" data-cites="Sahu_2024">Sahu (<a href="#ref-Sahu_2024" role="doc-biblioref">2024</a>)</span></strong></p>
+<p>This book provides instruction on modeling Spatio-Temporal data using Bayesian methods in R. The section of interest is chapter 7 “Bayesian modeling for point referenced spatio-temporal data”. It outlines three stage hierarchical structure used by Bayesian spatio-temporal models. It discusses how continuous data is modeled using Gaussian models and how spatial and temporal aspects are captured with Gaussian processes and autoregressive models and seperable covariance structures. It goes through the nugget effect, a popular approach to seperating spatio-temporal dependence from independent measurement error. It aslo discusses why seperable models are better for computational efficiency while maintaining prediction accuracy.</p>
+<p><strong>- <span class="citation" data-cites="Wikle_Zammit-Mangion_Cressie_2019">Wikle, Zammit-Mangion, and Cressie (<a href="#ref-Wikle_Zammit-Mangion_Cressie_2019" role="doc-biblioref">2019</a>)</span></strong></p>
+<p>This book is one of the main references for spatial statistics and has further development on the three hierarchical stages of a model. This is the observation model, the process model, and the parameter model. This lets us combine our observed data with our assumptions while accounting for uncertainty and implement Bayesian reasoning. With this methodology we can share information between time and location points and make better uncertainty estimates with our predictions.</p>
+</section>
+<section id="previous-readings" class="level3">
+<h3 class="anchored" data-anchor-id="previous-readings">Previous Readings</h3>
 <p><strong>- <span class="citation" data-cites="galecki2013">Galecki and Burzykowski (<a href="#ref-galecki2013" role="doc-biblioref">2013</a>)</span></strong></p>
 <p>This text provides a practical, step-by-step guide to fitting linear mixed-effects (LME) models using R, primarily leveraging the nlme and lme4 packages. It systematically bridges classical linear regression with mixed-effects frameworks, focusing on model formulation, estimation methods (such as Maximum Likelihood and Restricted Maximum Likelihood), and diagnostics for complex data structures.</p>
 <p>This book serves as a core reference for hierarchical and multilevel data modeling. It details how to handle nested, repeated-measures, and clustered structures by incorporating both fixed and random effects. Citing this text validates the foundational rules of hierarchical linear models, random intercepts, random slopes, and the explicit modeling of within-group variation.</p>
@@ -162,9 +169,6 @@ window.Quarto = {
 <p>LeSage’s article discusses the misrepresentations coefficients and can produce when assessing spatial models and address shortcomings of their previous research. They instead choose to approach economic data with a Monte Carlo method study and produce a demonstration about the issues of previous approaches and how Monte Carlo circumvents them. For their Monte Carlo instructional they include a branch of Bayesian approach. They conclude that more attention needs to have been brought to the direct and indirect effects estimates and further Monte Carlo practices should consider this for spatial models.</p>
 <p><strong>- <span class="citation" data-cites="Walls_Magliocca_McConnell_2018">Walls, Magliocca, and McConnell (<a href="#ref-Walls_Magliocca_McConnell_2018" role="doc-biblioref">2018</a>)</span></strong></p>
 <p>This paper assesses a spatial simulation model of coastal real estate and addressing the influence of storms and amenities (rec access, aesthetics, views, etc). Their model is parameterized to eastern US regions that experience hurricanes at a low rate and then is evaluated to see how spatial patterns of development would change if the frequency of storms was increased. They found that significantly increasing the probability of a hurricane did not change the spatial patterns of development in a meaningful way. If their low hurricane region’s storm possibility was increased to match that of states facing the Gulf of Mexico and all else equal, they found that development continued over time. They found coastal amenities to impact location patterns more. These findings may be important when considering how our own model behaves as Pinellas county is in South Florida and heavily impacted by hurricanes.</p>
-</section>
-<section id="previous-readings" class="level3">
-<h3 class="anchored" data-anchor-id="previous-readings">Previous Readings</h3>
 <p><strong>- <span class="citation" data-cites="Morgan2022-hs">Morgan, Douthat, and Lin (<a href="#ref-Morgan2022-hs" role="doc-biblioref">2022</a>)</span></strong></p>
 <p>This is the paper that we are basing our analysis on for the capstone. The goal is to take this paper’s data and add beefier statistical concepts. Our current ideas are Bayesian, hierarchical models, and maybe add a spatial component. This paper was written in 2022, and analyzed home prices given a multitude of different variables. The main focus of these being evacuation zone changes, and how it effected the home prices. Numerous other variables are in the model as well. The statistical concepts used were a basic OLS with a spatial error term and Difference in differences (DID). There were about 170,000 data points in the data they used, with the new data we have up to about 270,000. Results showed that a numerous of terms were significant from all areas including distance to shoreline, amenities, and race. The professor thinks that Bayesian can add to this analysis, and we further hypothesize allowing a term like evacuation zone to fluctuate with different slopes could strengthen our analysis.</p>
 <p><strong>- <span class="citation" data-cites="Johnson2022-bd">Johnson, Ott, and Dogucu (<a href="#ref-Johnson2022-bd" role="doc-biblioref">2022</a>)</span></strong></p>
@@ -216,8 +220,14 @@ LeSage, James P., and R. Kelley Pace. 2017. <span>“Spatial Econometric Monte C
 <div id="ref-Morgan2022-hs" class="csl-entry" role="listitem">
 Morgan, John Derek, Thomas Douthat, and Li-Hsiang Lin. 2022. <span>“On the Geographic Balance of Risk and Amenity: Changes in Evacuation Zones and Their Ripples in Housing Prices in Pinellas County, <span>FL</span>.”</span> <em>Pap. Appl. Geogr.</em>, July, 1–20.
 </div>
+<div id="ref-Sahu_2024" class="csl-entry" role="listitem">
+Sahu, Sujit K. 2024. <em>Bayesian Modeling of Spatio-Temporal Data with r</em>. Chapman &amp; Hall/CRC.
+</div>
 <div id="ref-Walls_Magliocca_McConnell_2018" class="csl-entry" role="listitem">
 Walls, Margaret, Nicholas Magliocca, and Virginia McConnell. 2018. <span>“Modeling Coastal Land and Housing Markets: Understanding the Competing Influences of Amenities and Storm Risks.”</span> <em>Ocean &amp;Amp; Coastal Management</em> 157 (May): 95–110. <a href="https://doi.org/10.1016/j.ocecoaman.2018.01.021">https://doi.org/10.1016/j.ocecoaman.2018.01.021</a>.
+</div>
+<div id="ref-Wikle_Zammit-Mangion_Cressie_2019" class="csl-entry" role="listitem">
+Wikle, Christopher K., Andrew Zammit-Mangion, and Noel A. C. Cressie. 2019. <em>Spatio-Temporal Statistics with r</em>. CRC Press, Taylor; Francis Group.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
