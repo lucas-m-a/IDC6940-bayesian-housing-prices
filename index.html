@@ -113,11 +113,8 @@ window.Quarto = {
     <h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
-  <li><a href="#gaps-and-limitations" id="toc-gaps-and-limitations" class="nav-link" data-scroll-target="#gaps-and-limitations">Gaps and Limitations</a></li>
-  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
   <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#readings" id="toc-readings" class="nav-link" data-scroll-target="#readings">Readings</a></li>
@@ -153,9 +150,6 @@ window.Quarto = {
 <div class="bio-card">
 <p><strong>Lucas Alderfer and Hunter Evans</strong></p>
 </div>
-<section id="abstract" class="level3 abstract">
-<h3 class="anchored" data-anchor-id="abstract">Abstract</h3>
-</section>
 <section id="introduction" class="level3 introduction">
 <h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
 <p>This study extends the empirical housing price analysis of <span class="citation" data-cites="Morgan2022-hs">Morgan, Douthat, and Lin (<a href="#ref-Morgan2022-hs" role="doc-biblioref">2022</a>)</span>, which examined the relationship between evacuation zone changes and residential property values in Pinellas County, Florida while accounting for different socioeconomic, geographic, and housing characteristics. <span class="citation" data-cites="Morgan2022-hs">Morgan, Douthat, and Lin (<a href="#ref-Morgan2022-hs" role="doc-biblioref">2022</a>)</span> used OLS with spatial error model (SEM) along with Difference in Differences (DID). The study presented intends to build on that approach by incorporating Bayesian and hierarchical methods and by more directly modeling residual spatial dependence through a conditional autoregressive (CAR) structure. The resulting Hierarchical Bayesian Spatial Error Model (HBSEM) aims to integrate three distinct statistical modeling strategies: hierarchical structure, Bayesian inference, and spatial autoregression.</p>
@@ -180,7 +174,7 @@ window.Quarto = {
 <p>When evaluated collectively, the resulting CAR and hierarchical subsumption of the SEM framework is therefore motivated by findings complementary to the associated methodological and empirical literature. The hierarchical component will address variation among groups, while the CAR component will capture spatial dependence among adjacent areas. The Bayesian approach provides a coherent methodology for estimating these components and quantifying uncertainty. As such, the SEM structure will provide a method for examining the relationships among multiple factors associated with housing prices. Rather than assuming that every property will follow an identical independent relationship between the predicting characteristics and price, the proposed model recognizes the geographic structures of housing markets more closely. Properties are embedded within neighborhoods and larger geographic areas, and those locations themselves contain spatial relationships. A coastal housing market in which environmental exposure, evacuation zones, shoreline proximity, amenity integration, and other geographically distributed factors may jointly influence property values.</p>
 <p>The literature thus provides a rationale both empirical and methodological for the extension of the existing housing price analysis. Previous research shows an established relationship between environmental risk and property values while the spatial, hierarchical, Bayesian, and SEM research provides more flexible and accurate approaches to modeling those relationships. The proposed approach builds on these foundations by incorporating spatially structured and hierarchical variation into an SEM frame with the objective of obtaining estimates that more appropriately reflect the geographic organization and uncertainty inherent to the housing price data.</p>
 </section>
-<section id="data" class="level3 datastuff">
+<section id="data" class="level3 methods">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
 <section id="variable-definitions" class="level4">
 <h4 class="anchored" data-anchor-id="variable-definitions">Variable Definitions</h4>
@@ -562,13 +556,7 @@ window.Quarto = {
 </div>
 </section>
 </section>
-<section id="gaps-and-limitations" class="level3 gaps">
-<h3 class="anchored" data-anchor-id="gaps-and-limitations">Gaps and Limitations</h3>
-</section>
-<section id="methods" class="level3 methods">
-<h3 class="anchored" data-anchor-id="methods">Methods</h3>
-</section>
-<section id="results-and-discussion" class="level3 res-discuss">
+<section id="results-and-discussion" class="level3 analysis-results">
 <h3 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h3>
 </section>
 <section id="conclusion" class="level3 conc">
