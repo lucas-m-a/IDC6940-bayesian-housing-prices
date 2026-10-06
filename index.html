@@ -115,6 +115,7 @@ window.Quarto = {
   <ul>
   <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a></li>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
   <li><a href="#gaps-and-limitations" id="toc-gaps-and-limitations" class="nav-link" data-scroll-target="#gaps-and-limitations">Gaps and Limitations</a></li>
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
   <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a></li>
@@ -178,6 +179,111 @@ window.Quarto = {
 <p>The spatial literature indicates that geographic proximity can create dependence among observations. While the spatial error component used in the original work, a hierarchical Bayesian CAR formulation provides an alternative method to representing structured spatial variation. The CAR component can model residual dependencies among neighboring geographic areas while the hierarchical component will permit information to be shared among those areas. This is particularly relevant as the goal is to estimate housing price relationships while accounting for the behavior of spatial geographic clusters.</p>
 <p>When evaluated collectively, the resulting CAR and hierarchical subsumption of the SEM framework is therefore motivated by findings complementary to the associated methodological and empirical literature. The hierarchical component will address variation among groups, while the CAR component will capture spatial dependence among adjacent areas. The Bayesian approach provides a coherent methodology for estimating these components and quantifying uncertainty. As such, the SEM structure will provide a method for examining the relationships among multiple factors associated with housing prices. Rather than assuming that every property will follow an identical independent relationship between the predicting characteristics and price, the proposed model recognizes the geographic structures of housing markets more closely. Properties are embedded within neighborhoods and larger geographic areas, and those locations themselves contain spatial relationships. A coastal housing market in which environmental exposure, evacuation zones, shoreline proximity, amenity integration, and other geographically distributed factors may jointly influence property values.</p>
 <p>The literature thus provides a rationale both empirical and methodological for the extension of the existing housing price analysis. Previous research shows an established relationship between environmental risk and property values while the spatial, hierarchical, Bayesian, and SEM research provides more flexible and accurate approaches to modeling those relationships. The proposed approach builds on these foundations by incorporating spatially structured and hierarchical variation into an SEM frame with the objective of obtaining estimates that more appropriately reflect the geographic organization and uncertainty inherent to the housing price data.</p>
+</section>
+<section id="data" class="level3 datastuff">
+<h3 class="anchored" data-anchor-id="data">Data</h3>
+<table class="table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 30%">
+<col style="width: 15%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Definition</th>
+<th>Type</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Price</td>
+<td>Sale price (natural log transformation)</td>
+<td>Continuous</td>
+<td>Dependent variable</td>
+</tr>
+<tr class="even">
+<td>Sale year</td>
+<td>Year in which the property was sold</td>
+<td>Continuous</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>Frontage</td>
+<td>Lake + Pond = Lake; Bay + Tampa Bay = Bay; Gulf of Mexico = Gulf of Mexico; all other categories = Other</td>
+<td>Categorical</td>
+<td>Other = reference</td>
+</tr>
+<tr class="even">
+<td>Sea wall</td>
+<td>Whether the property has a sea wall</td>
+<td>Binary</td>
+<td>No = reference</td>
+</tr>
+<tr class="odd">
+<td>CCCL distance</td>
+<td>Distance from the property to the CCCL</td>
+<td>Continuous</td>
+<td>Leave out of first run due to potential multicollinearity</td>
+</tr>
+<tr class="even">
+<td>Tampa Bay distance</td>
+<td>Distance from the property to Tampa Bay</td>
+<td>Continuous</td>
+<td>Leave out of first run due to potential multicollinearity</td>
+</tr>
+<tr class="odd">
+<td>ICW distance</td>
+<td>Distance from the property to the Intracoastal Waterway</td>
+<td>Continuous</td>
+<td>Consider separately due to potential multicollinearity</td>
+</tr>
+<tr class="even">
+<td>Quality</td>
+<td>Minimal + Fair = Fair; Average = Average; Superior + Excellent + Above Average = Above Average</td>
+<td>Categorical</td>
+<td>Average = reference</td>
+</tr>
+<tr class="odd">
+<td>Heated area</td>
+<td>Heated living area of the property</td>
+<td>Continuous</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Acreage</td>
+<td>Property acreage</td>
+<td>Continuous</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>Site city</td>
+<td>Municipality/city where the property is located</td>
+<td>Hierarchical</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Barrier island municipality</td>
+<td>Whether the municipality is located on a barrier island</td>
+<td>Binary</td>
+<td>Non-barrier = reference</td>
+</tr>
+<tr class="odd">
+<td>Stories</td>
+<td>1 = 1 story; 2 = 2 stories; 3+ = 3 or more stories</td>
+<td>Categorical</td>
+<td>1 = reference</td>
+</tr>
+<tr class="even">
+<td>Foundation</td>
+<td>Whether the property has a continuous footing foundation</td>
+<td>Binary</td>
+<td>No = reference</td>
+</tr>
+</tbody>
+</table>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/Evac.png" class="img-fluid figure-img"></p>
