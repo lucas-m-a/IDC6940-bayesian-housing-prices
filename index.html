@@ -169,6 +169,18 @@ window.Quarto = {
 <p><span class="citation" data-cites="Walls_Magliocca_McConnell_2018">Walls, Magliocca, and McConnell (<a href="#ref-Walls_Magliocca_McConnell_2018" role="doc-biblioref">2018</a>)</span> examined coastal real estate developments using a spatial simulation model that similarly incorporated hurricane risks and coastal amenities. They found that increasing the probability of hurricanes did not reliably produce large changes in the spatial development patterns under the examined conditions while coastal amenities has a stronger influence on location patterns. Although their simulation setting slightly differs from the research at hand, their study demonstrates that environmental risks and spatially distributed amenities should be simultaneously considered when assessing coastal development.</p>
 <p>The empirical results of each of these studies is relevant to the present research in that the study area is restricted to south Florida in where hurricane exposure, evacuation zones, flooding, shoreline proximity, and amenities may all contribute to spatial and hierarchical variations in housing prices. The literature therefore informs our priors and suggests that environmental variables should not be evaluated independent from geographical contexts.</p>
 <p><span class="citation" data-cites="Morgan2022-hs">Morgan, Douthat, and Lin (<a href="#ref-Morgan2022-hs" role="doc-biblioref">2022</a>)</span> provides the primary empirical source for the present study. The study examined approximately 170,000 housing observations and evaluated the relationship between evacuation zone changes and housing prices using ordinary least squares regression with a spatial error component and a difference in differences frame. The analysis also incorporates a broad set of housing, geographic, demographic, and amenity variables. They found several of these characteristics, including distance from shoreline, amenities, and demographic variables to be statistically significantly associated with housing prices.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Evac.png" class="img-fluid figure-img"></p>
+<figcaption>Evacuation Zones for State <span class="citation" data-cites="Morgan2022-hs">Morgan, Douthat, and Lin (<a href="#ref-Morgan2022-hs" role="doc-biblioref">2022</a>)</span></figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/evac2.jpg" class="img-fluid figure-img"></p>
+<figcaption>Evacuation Zones by Year <span class="citation" data-cites="Morgan2022-hs">Morgan, Douthat, and Lin (<a href="#ref-Morgan2022-hs" role="doc-biblioref">2022</a>)</span></figcaption>
+</figure>
+</div>
 <p>The present study intends to extend this approach in several ways. The literature on hierarchical modeling suggests that geographic groups may have different baseline housing prices and potentially different relationships between predictors and housing prices. A hierarchical structure therefore may allow coefficients to vary across geographic units rather than imposing a single relationship to the entire study area.</p>
 <p>The spatial literature indicates that geographic proximity can create dependence among observations. While the spatial error component used in the original work, a hierarchical Bayesian CAR formulation provides an alternative method to representing structured spatial variation. The CAR component can model residual dependencies among neighboring geographic areas while the hierarchical component will permit information to be shared among those areas. This is particularly relevant as the goal is to estimate housing price relationships while accounting for the behavior of spatial geographic clusters.</p>
 <p>When evaluated collectively, the resulting CAR and hierarchical subsumption of the SEM framework is therefore motivated by findings complementary to the associated methodological and empirical literature. The hierarchical component will address variation among groups, while the CAR component will capture spatial dependence among adjacent areas. The Bayesian approach provides a coherent methodology for estimating these components and quantifying uncertainty. As such, the SEM structure will provide a method for examining the relationships among multiple factors associated with housing prices. Rather than assuming that every property will follow an identical independent relationship between the predicting characteristics and price, the proposed model recognizes the geographic structures of housing markets more closely. Properties are embedded within neighborhoods and larger geographic areas, and those locations themselves contain spatial relationships. A coastal housing market in which environmental exposure, evacuation zones, shoreline proximity, amenity integration, and other geographically distributed factors may jointly influence property values.</p>
@@ -521,21 +533,6 @@ window.Quarto = {
 </tbody>
 </table>
 </section>
-</section>
-<section id="evacuation-zones" class="level4">
-<h4 class="anchored" data-anchor-id="evacuation-zones">Evacuation Zones</h4>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/Evac.png" class="img-fluid figure-img"></p>
-<figcaption>Evacuation Zones for State <span class="citation" data-cites="Morgan2022-hs">Morgan, Douthat, and Lin (<a href="#ref-Morgan2022-hs" role="doc-biblioref">2022</a>)</span></figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/evac2.jpg" class="img-fluid figure-img"></p>
-<figcaption>Evacuation Zones by Year <span class="citation" data-cites="Morgan2022-hs">Morgan, Douthat, and Lin (<a href="#ref-Morgan2022-hs" role="doc-biblioref">2022</a>)</span></figcaption>
-</figure>
-</div>
 <section id="distribution" class="level5">
 <h5 class="anchored" data-anchor-id="distribution">Distribution</h5>
 <div class="quarto-figure quarto-figure-center">
@@ -557,6 +554,18 @@ window.Quarto = {
 </figure>
 </div>
 </section>
+</section>
+<section id="model" class="level4">
+<h4 class="anchored" data-anchor-id="model">Model</h4>
+</section>
+<section id="prior-distribution" class="level4">
+<h4 class="anchored" data-anchor-id="prior-distribution">Prior Distribution</h4>
+</section>
+<section id="posterior" class="level4">
+<h4 class="anchored" data-anchor-id="posterior">Posterior</h4>
+</section>
+<section id="model-assessment" class="level4">
+<h4 class="anchored" data-anchor-id="model-assessment">Model Assessment</h4>
 </section>
 </section>
 <section id="results-and-discussion" class="level3 analysis-results">
