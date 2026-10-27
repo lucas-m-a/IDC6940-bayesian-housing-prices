@@ -334,7 +334,7 @@ Rather than assuming that every property will follow an identical independent re
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pdsub <span class="ot">&lt;-</span> pinellasdata <span class="sc">%&gt;%</span> <span class="fu">select</span>(adj_price, sale_year, heated_area, acreage, quality, stories, foundation, frontage, seawall)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pdsub <span class="ot">&lt;-</span> pinellasdata <span class="sc">%&gt;%</span> <span class="fu">select</span>(adj_price, sale_year, heated_area, acreage, quality, stories, foundation, frontage, seawall, cccl_distance, tb_distance)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pdsub<span class="sc">$</span>cont_foot <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(pdsub<span class="sc">$</span>foundation <span class="sc">==</span> <span class="st">"Continuous Footing"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -557,6 +557,14 @@ Rather than assuming that every property will follow an identical independent re
 </table>
 <p><strong>Table 1e. Distance Characteristics</strong></p>
 <table class="table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Variable</th>
@@ -570,27 +578,19 @@ Rather than assuming that every property will follow an identical independent re
 <tbody>
 <tr class="odd">
 <td>CCCL Distance (miles)</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">267074</td>
+<td style="text-align: right;">7780.8461911</td>
+<td style="text-align: right;">3931.3673975</td>
+<td style="text-align: right;">0.0050042</td>
+<td style="text-align: right;">1.8783883^{4}</td>
 </tr>
 <tr class="even">
 <td>Tampa Bay Distance (miles)</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td>ICW Distance (miles)</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">267074</td>
+<td style="text-align: right;">6791.502144</td>
+<td style="text-align: right;">4397.7725966</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.1807165^{4}</td>
 </tr>
 </tbody>
 </table>
