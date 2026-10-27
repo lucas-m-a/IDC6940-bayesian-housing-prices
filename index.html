@@ -341,15 +341,9 @@ Rather than assuming that every property will follow an identical independent re
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>f_lake <span class="ot">&lt;-</span> pdsub<span class="sc">$</span>frontage <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Lake"</span>, <span class="st">"Pond"</span>)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>f_bay <span class="ot">&lt;-</span> pdsub<span class="sc">$</span>frontage <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Bay"</span>, <span class="st">"Tampa Bay"</span>)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>f_gom <span class="ot">&lt;-</span> pdsub<span class="sc">$</span>frontage <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Gulf of Mexico"</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>f_other <span class="ot">&lt;-</span> pdsub<span class="sc">$</span>frontage <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"None"</span>, <span class="st">"Canal/River"</span>, <span class="st">"Golf Course"</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(pdsub<span class="sc">$</span>seawall)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>f_other <span class="ot">&lt;-</span> pdsub<span class="sc">$</span>frontage <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"None"</span>, <span class="st">"Canal/River"</span>, <span class="st">"Golf Course"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "No"  "Yes"</code></pre>
 </div>
-</div>
-<p>Lake + Pond = Lake; Bay + Tampa Bay = Bay; Gulf of Mexico = Gulf of Mexico; all other categories = Other</p>
 <p><strong>Table 1a. Property Characteristics</strong></p>
 <table class="table">
 <colgroup>
@@ -524,6 +518,7 @@ Rather than assuming that every property will follow an identical independent re
 </tr>
 </tbody>
 </table>
+<p>Lake + Pond = Lake; Bay + Tampa Bay = Bay; Gulf of Mexico = Gulf of Mexico; all other categories = Other</p>
 <p><strong>Table 1d. Regional Characteristics</strong></p>
 <table class="table">
 <thead>
