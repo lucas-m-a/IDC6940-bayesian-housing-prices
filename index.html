@@ -342,7 +342,19 @@ Rather than assuming that every property will follow an identical independent re
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>f_lake <span class="ot">&lt;-</span> pdsub<span class="sc">$</span>frontage <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Lake"</span>, <span class="st">"Pond"</span>)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>f_bay <span class="ot">&lt;-</span> pdsub<span class="sc">$</span>frontage <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Bay"</span>, <span class="st">"Tampa Bay"</span>)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>f_gom <span class="ot">&lt;-</span> pdsub<span class="sc">$</span>frontage <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Gulf of Mexico"</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>f_other <span class="ot">&lt;-</span> pdsub<span class="sc">$</span>frontage <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"None"</span>, <span class="st">"Canal/River"</span>, <span class="st">"Golf Course"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>f_other <span class="ot">&lt;-</span> pdsub<span class="sc">$</span>frontage <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"None"</span>, <span class="st">"Canal/River"</span>, <span class="st">"Golf Course"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>pdsub<span class="sc">$</span>barrier_municipality <span class="ot">&lt;-</span> <span class="fu">if_else</span>(</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  pdsub<span class="sc">$</span>site_city <span class="sc">%in%</span> <span class="fu">c</span>(</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST PETE BEACH"</span>, <span class="st">"TREASURE ISLAND"</span>, <span class="st">"MADEIRA BEACH"</span>, </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INDIAN ROCKS BEACH"</span>, <span class="st">"REDINGTON SHORES"</span>, <span class="st">"BELLEAIR BEACH"</span>, </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"REDINGTON BEACH"</span>, <span class="st">"NORTH REDINGTON BEACH"</span>, <span class="st">"INDIAN SHORES"</span>, </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CLEARWATER BEACH"</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  ), </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Barrier"</span>, </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Non-Barrier"</span>, </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing =</span> <span class="cn">NA_character_</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><strong>Table 1a. Property Characteristics</strong></p>
@@ -522,6 +534,12 @@ Rather than assuming that every property will follow an identical independent re
 <p>Lake + Pond = Lake; Bay + Tampa Bay = Bay; Gulf of Mexico = Gulf of Mexico; all other categories = Other</p>
 <p><strong>Table 1d. Regional Characteristics</strong></p>
 <table class="table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Variable</th>
@@ -534,14 +552,14 @@ Rather than assuming that every property will follow an identical independent re
 <tr class="odd">
 <td>Barrier Island Municipality</td>
 <td>Non-barrier (Reference)</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">257520</td>
+<td style="text-align: right;">96.4227143</td>
 </tr>
 <tr class="even">
 <td></td>
 <td>Barrier island</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">9554</td>
+<td style="text-align: right;">3.5772857</td>
 </tr>
 <tr class="odd">
 <td>Site City</td>
