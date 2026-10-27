@@ -336,9 +336,20 @@ Rather than assuming that every property will follow an identical independent re
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pdsub <span class="ot">&lt;-</span> pinellasdata <span class="sc">%&gt;%</span> <span class="fu">select</span>(adj_price, sale_year, heated_area, acreage, quality, stories, foundation, frontage, seawall)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pdsub<span class="sc">$</span>cont_foot <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(pdsub<span class="sc">$</span>foundation <span class="sc">==</span> <span class="st">"Continuous Footing"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pdsub<span class="sc">$</span>cont_foot <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(pdsub<span class="sc">$</span>foundation <span class="sc">==</span> <span class="st">"Continuous Footing"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>f_lake <span class="ot">&lt;-</span> pdsub<span class="sc">$</span>frontage <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Lake"</span>, <span class="st">"Pond"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>f_bay <span class="ot">&lt;-</span> pdsub<span class="sc">$</span>frontage <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Bay"</span>, <span class="st">"Tampa Bay"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>f_gom <span class="ot">&lt;-</span> pdsub<span class="sc">$</span>frontage <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Gulf of Mexico"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>f_other <span class="ot">&lt;-</span> pdsub<span class="sc">$</span>frontage <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"None"</span>, <span class="st">"Canal/River"</span>, <span class="st">"Golf Course"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(pdsub<span class="sc">$</span>seawall)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "No"  "Yes"</code></pre>
 </div>
+</div>
+<p>Lake + Pond = Lake; Bay + Tampa Bay = Bay; Gulf of Mexico = Gulf of Mexico; all other categories = Other</p>
 <p><strong>Table 1a. Property Characteristics</strong></p>
 <table class="table">
 <colgroup>
@@ -478,38 +489,38 @@ Rather than assuming that every property will follow an identical independent re
 <tr class="odd">
 <td>Frontage</td>
 <td>Other (Reference)</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">255944</td>
+<td style="text-align: right;">95.8326157</td>
 </tr>
 <tr class="even">
 <td></td>
 <td>Lake</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">5996</td>
+<td style="text-align: right;">2.2450707</td>
 </tr>
 <tr class="odd">
 <td></td>
 <td>Bay</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">4393</td>
+<td style="text-align: right;">1.6448625</td>
 </tr>
 <tr class="even">
 <td></td>
 <td>Gulf of Mexico</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">741</td>
+<td style="text-align: right;">0.2774512</td>
 </tr>
 <tr class="odd">
 <td>Sea Wall</td>
 <td>No (Reference)</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">252464</td>
+<td style="text-align: right;">94.529606</td>
 </tr>
 <tr class="even">
 <td></td>
 <td>Yes</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">14610</td>
+<td style="text-align: right;">5.470394</td>
 </tr>
 </tbody>
 </table>
