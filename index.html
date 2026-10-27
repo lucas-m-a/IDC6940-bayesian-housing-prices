@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lucas Alderfer and Hunter Evans - IDC6940 Bayesian Housing Prices</title>
+<title>Lucas Alderfer and Hunter Evans - Bayesian Hierarchical SAR Analysis of Housing Prices in Pinellas County, Florida</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -164,7 +164,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">IDC6940 Bayesian Housing Prices</h1>
+<h1 class="title">Bayesian Hierarchical SAR Analysis of Housing Prices in Pinellas County, Florida</h1>
 </div>
 
 
@@ -183,6 +183,11 @@ window.Quarto = {
 
 <div class="bio-card">
 <p><strong>Lucas Alderfer and Hunter Evans</strong></p>
+<ul>
+<li>fix lit review/ intor (render down)</li>
+<li>round descriptive tables</li>
+<li>remove some dist stuff</li>
+</ul>
 </div>
 <section id="introduction" class="level3 introduction">
 <h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
@@ -222,6 +227,61 @@ Rather than assuming that every property will follow an identical independent re
 </section>
 <section id="methods" class="level3 methods">
 <h3 class="anchored" data-anchor-id="methods">Methods</h3>
+<section id="model-overview" class="level4">
+<h4 class="anchored" data-anchor-id="model-overview">Model Overview</h4>
+<p>The primary model used in this study is a Bayesian hierarchical simultaneous autoregressive (SAR) spatial error model. Bayesian estimation combines prior distributions for model parameters with observed data to estimate relationships between housing prices and property characteristics. The hierarchical component allows each city to have its own varying intercept, accounting for differences in baseline housing prices across cities. The SAR spatial error component accounts for spatial dependence among nearby properties that may not be explained by the included predictors.</p>
+<p>The response variable is the natural logarithm of adjusted sale price, defined as (y_i = (P_i)), where (P_i) represents the adjusted sale price of property (i). The model examines associations between housing prices, proximity to water, property characteristics, and differences across cities while accounting for spatial dependence. The analysis estimates associations rather than causal effects.</p>
+<section id="predictor-variables" class="level5">
+<h5 class="anchored" data-anchor-id="predictor-variables">Predictor Variables</h5>
+<p>The explanatory variables include property frontage type, seawall presence, distance to the Coastal Construction Control Line (CCCL), distance to Tampa Bay, property quality, heated living area, acreage, barrier-island status, number of stories, and foundation type. City is included as a hierarchical grouping variable with a varying intercept.</p>
+<p>Sale year is treated as a continuous variable centered at 2000:</p>
+<p><span class="math display">\[
+\text{sale\_year\_c}_i
+= \text{sale\_year}_i - 2000.
+\]</span></p>
+<p>This allows the model to estimate a linear association between sale year and log adjusted sale price. A one-unit increase in the centered year variable represents one additional year. The coefficient therefore represents the estimated yearly change in log adjusted sale price, holding the other predictors constant. The analysis includes the sale years represented in the final analytic dataset.</p>
+<p>The continuous predictors for CCCL distance, Tampa Bay distance, heated living area, and acreage are standardized by subtracting each variable’s sample mean and dividing by its sample standard deviation. Consequently, their coefficients represent the estimated association between a one-standard-deviation increase in a predictor and log adjusted sale price, holding the other predictors constant.</p>
+<p>Categorical variables are represented using indicator (dummy) coding. The reference categories are no frontage, no seawall, average property quality, non-barrier status, one story, and no continuous footing foundation. Coefficients for the other categories estimate differences relative to their respective reference categories, conditional on the remaining predictors in the model.</p>
+</section>
+<section id="hierarchical-model-structure" class="level5">
+<h5 class="anchored" data-anchor-id="hierarchical-model-structure">Hierarchical Model Structure</h5>
+<p>The hierarchical component of the model is represented by</p>
+<p><span class="math display">\[
+y_i =
+\mathbf{x}_i^\top \boldsymbol{\beta}
++ b_{j[i]} + \varepsilon_i.
+\]</span></p>
+<p>Here, (y_i) is the log adjusted sale price for property (i), (<em>i) is the vector of explanatory variables for that property, () is the vector of regression coefficients, (b</em>{j[i]}) is the city-specific intercept for the city containing property (i), and (_i) is the spatially dependent error for that property.</p>
+<p>City-specific intercepts are modeled as</p>
+<p><span class="math display">\[
+b_j \sim
+\mathcal{N}(0,\sigma_{\text{city}}^2).
+\]</span></p>
+<p>This specification allows cities to have different baseline log-price levels while assuming that their intercepts arise from a shared normal distribution. The parameter (_{}) represents the between-city variation in baseline log-price levels after accounting for the included predictors. This hierarchical structure allows information to be shared across cities rather than fitting an independent regression model for each city.</p>
+</section>
+<section id="spatial-error-structure" class="level5">
+<h5 class="anchored" data-anchor-id="spatial-error-structure">Spatial Error Structure</h5>
+<p>Spatial dependence is incorporated through a simultaneous autoregressive (SAR) spatial error process:</p>
+<p><span class="math display">\[
+\boldsymbol{\varepsilon}
+= \rho W\boldsymbol{\varepsilon}
++ \boldsymbol{\eta}.
+\]</span></p>
+<p>In this equation, (W) is the spatial weights matrix defining the neighboring relationships among properties, () is the spatial error dependence parameter, and () represents the remaining error component. The parameter () describes the strength of spatial dependence in the error process.</p>
+<p>The spatial weights matrix is constructed using an eight-nearest-neighbor procedure based on property coordinates. When the original coordinates are recorded as longitude and latitude, they are projected into an appropriate coordinate reference system for distance calculations before neighboring properties are identified. The neighbor relationships are then symmetrized, and the weights matrix is row-standardized so that the weights associated with each property’s neighbors sum to one.</p>
+<p>This SAR spatial error structure accounts for spatial patterns in unexplained housing-price variation among nearby properties. For example, neighboring homes may share unmeasured location-related characteristics. Unlike a spatial lag model, which includes a spatially lagged response variable, the SAR spatial error model represents spatial dependence through the error process rather than directly including neighboring properties’ sale prices as predictors.</p>
+</section>
+<section id="bayesian-estimation" class="level5">
+<h5 class="anchored" data-anchor-id="bayesian-estimation">Bayesian Estimation</h5>
+<p>Bayesian estimation combines the likelihood, which describes how probable the observed housing prices are under the model, with prior distributions, which specify assumptions about plausible parameter values before conditioning on the observed data. The model uses a Gaussian likelihood for log adjusted sale price.</p>
+<p>The regression coefficients are assigned normal prior distributions, ((0,1)). The intercept is assigned a Student-(t) prior with 3 degrees of freedom, location 11, and scale 2.5. The standard deviations associated with city-level variation and residual variation are assigned Student-(t) priors with 3 degrees of freedom, location 0, and scale 1, subject to the positive constraints on standard deviation parameters. The spatial dependence parameter is estimated as part of the SAR spatial error structure under the model’s specified prior and parameterization.</p>
+<p>The model is estimated in R using the <code>brms</code> package and its Stan-based Markov chain Monte Carlo (MCMC) sampling procedure. The sampling configuration uses four chains, 1,000 iterations per chain, and 500 warm-up iterations per chain, with <code>adapt_delta = 0.95</code> and <code>max_treedepth = 12</code>.</p>
+<p>Model convergence and sampling quality are evaluated using the potential scale reduction statistic (()), effective sample sizes, trace plots, and checks for divergent transitions or other sampling warnings. Posterior estimates are summarized using posterior point estimates and 95% credible intervals.</p>
+</section>
+</section>
+</section>
+<section id="results-and-discussion" class="level3 analysis-results">
+<h3 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h3>
 <section id="data" class="level4">
 <h4 class="anchored" data-anchor-id="data">Data</h4>
 <section id="variable-definitions" class="level5">
@@ -380,24 +440,24 @@ Rather than assuming that every property will follow an identical independent re
 <tbody>
 <tr class="odd">
 <td>Sale Price</td>
-<td style="text-align: right;">267074</td>
+<td style="text-align: right;">2.67074^{5}</td>
 <td style="text-align: right;">1.1939187^{5}</td>
 <td style="text-align: right;">1.5525905^{5}</td>
-<td style="text-align: right;">82.1954317</td>
+<td style="text-align: right;">82.195</td>
 <td style="text-align: right;">1.8872377^{7}</td>
 </tr>
 <tr class="even">
 <td>Log Sale Price</td>
-<td style="text-align: right;">267074</td>
-<td style="text-align: right;">11.3239794</td>
-<td style="text-align: right;">0.8865994</td>
-<td style="text-align: right;">4.4090997</td>
-<td style="text-align: right;">16.7532099</td>
+<td style="text-align: right;">2.67074^{5}</td>
+<td style="text-align: right;">11.324</td>
+<td style="text-align: right;">0.887</td>
+<td style="text-align: right;">4.409</td>
+<td style="text-align: right;">16.753</td>
 </tr>
 <tr class="odd">
 <td>Sale Year</td>
-<td style="text-align: right;">267074</td>
-<td style="text-align: right;">2007.5284453</td>
+<td style="text-align: right;">2.67074^{5}</td>
+<td style="text-align: right;">2006</td>
 <td style="text-align: right;">5.2591327</td>
 <td style="text-align: right;">2000</td>
 <td style="text-align: right;">2016</td>
@@ -481,7 +541,7 @@ Rather than assuming that every property will follow an identical independent re
 </tr>
 </tbody>
 </table>
-<p>Minimal + Fair = Fair; Average = Average; Superior + Excellent + Above Average = Above Average</p>
+<p>The original data was combined such that minimal and fair quality became fair, average is Average, and superior, excellent and above average were combined to Above Average</p>
 <p><strong>Table 1c. Waterfront Characteristics</strong></p>
 <table class="table">
 <thead>
@@ -630,61 +690,6 @@ Rather than assuming that every property will follow an identical independent re
 </div>
 </section>
 </section>
-<section id="model-overview" class="level4">
-<h4 class="anchored" data-anchor-id="model-overview">Model Overview</h4>
-<p>The primary model used in this study is a Bayesian hierarchical simultaneous autoregressive (SAR) spatial error model. Bayesian estimation combines prior distributions for model parameters with observed data to estimate relationships between housing prices and property characteristics. The hierarchical component allows each city to have its own varying intercept, accounting for differences in baseline housing prices across cities. The SAR spatial error component accounts for spatial dependence among nearby properties that may not be explained by the included predictors.</p>
-<p>The response variable is the natural logarithm of adjusted sale price, defined as (y_i = (P_i)), where (P_i) represents the adjusted sale price of property (i). The model examines associations between housing prices, proximity to water, property characteristics, and differences across cities while accounting for spatial dependence. The analysis estimates associations rather than causal effects.</p>
-<section id="predictor-variables" class="level5">
-<h5 class="anchored" data-anchor-id="predictor-variables">Predictor Variables</h5>
-<p>The explanatory variables include property frontage type, seawall presence, distance to the Coastal Construction Control Line (CCCL), distance to Tampa Bay, property quality, heated living area, acreage, barrier-island status, number of stories, and foundation type. City is included as a hierarchical grouping variable with a varying intercept.</p>
-<p>Sale year is treated as a continuous variable centered at 2000:</p>
-<p><span class="math display">\[
-\text{sale\_year\_c}_i
-= \text{sale\_year}_i - 2000.
-\]</span></p>
-<p>This allows the model to estimate a linear association between sale year and log adjusted sale price. A one-unit increase in the centered year variable represents one additional year. The coefficient therefore represents the estimated yearly change in log adjusted sale price, holding the other predictors constant. The analysis includes the sale years represented in the final analytic dataset.</p>
-<p>The continuous predictors for CCCL distance, Tampa Bay distance, heated living area, and acreage are standardized by subtracting each variable’s sample mean and dividing by its sample standard deviation. Consequently, their coefficients represent the estimated association between a one-standard-deviation increase in a predictor and log adjusted sale price, holding the other predictors constant.</p>
-<p>Categorical variables are represented using indicator (dummy) coding. The reference categories are no frontage, no seawall, average property quality, non-barrier status, one story, and no continuous footing foundation. Coefficients for the other categories estimate differences relative to their respective reference categories, conditional on the remaining predictors in the model.</p>
-</section>
-<section id="hierarchical-model-structure" class="level5">
-<h5 class="anchored" data-anchor-id="hierarchical-model-structure">Hierarchical Model Structure</h5>
-<p>The hierarchical component of the model is represented by</p>
-<p><span class="math display">\[
-y_i =
-\mathbf{x}_i^\top \boldsymbol{\beta}
-+ b_{j[i]} + \varepsilon_i.
-\]</span></p>
-<p>Here, (y_i) is the log adjusted sale price for property (i), (<em>i) is the vector of explanatory variables for that property, () is the vector of regression coefficients, (b</em>{j[i]}) is the city-specific intercept for the city containing property (i), and (_i) is the spatially dependent error for that property.</p>
-<p>City-specific intercepts are modeled as</p>
-<p><span class="math display">\[
-b_j \sim
-\mathcal{N}(0,\sigma_{\text{city}}^2).
-\]</span></p>
-<p>This specification allows cities to have different baseline log-price levels while assuming that their intercepts arise from a shared normal distribution. The parameter (_{}) represents the between-city variation in baseline log-price levels after accounting for the included predictors. This hierarchical structure allows information to be shared across cities rather than fitting an independent regression model for each city.</p>
-</section>
-<section id="spatial-error-structure" class="level5">
-<h5 class="anchored" data-anchor-id="spatial-error-structure">Spatial Error Structure</h5>
-<p>Spatial dependence is incorporated through a simultaneous autoregressive (SAR) spatial error process:</p>
-<p><span class="math display">\[
-\boldsymbol{\varepsilon}
-= \rho W\boldsymbol{\varepsilon}
-+ \boldsymbol{\eta}.
-\]</span></p>
-<p>In this equation, (W) is the spatial weights matrix defining the neighboring relationships among properties, () is the spatial error dependence parameter, and () represents the remaining error component. The parameter () describes the strength of spatial dependence in the error process.</p>
-<p>The spatial weights matrix is constructed using an eight-nearest-neighbor procedure based on property coordinates. When the original coordinates are recorded as longitude and latitude, they are projected into an appropriate coordinate reference system for distance calculations before neighboring properties are identified. The neighbor relationships are then symmetrized, and the weights matrix is row-standardized so that the weights associated with each property’s neighbors sum to one.</p>
-<p>This SAR spatial error structure accounts for spatial patterns in unexplained housing-price variation among nearby properties. For example, neighboring homes may share unmeasured location-related characteristics. Unlike a spatial lag model, which includes a spatially lagged response variable, the SAR spatial error model represents spatial dependence through the error process rather than directly including neighboring properties’ sale prices as predictors.</p>
-</section>
-<section id="bayesian-estimation" class="level5">
-<h5 class="anchored" data-anchor-id="bayesian-estimation">Bayesian Estimation</h5>
-<p>Bayesian estimation combines the likelihood, which describes how probable the observed housing prices are under the model, with prior distributions, which specify assumptions about plausible parameter values before conditioning on the observed data. The model uses a Gaussian likelihood for log adjusted sale price.</p>
-<p>The regression coefficients are assigned normal prior distributions, ((0,1)). The intercept is assigned a Student-(t) prior with 3 degrees of freedom, location 11, and scale 2.5. The standard deviations associated with city-level variation and residual variation are assigned Student-(t) priors with 3 degrees of freedom, location 0, and scale 1, subject to the positive constraints on standard deviation parameters. The spatial dependence parameter is estimated as part of the SAR spatial error structure under the model’s specified prior and parameterization.</p>
-<p>The model is estimated in R using the <code>brms</code> package and its Stan-based Markov chain Monte Carlo (MCMC) sampling procedure. The sampling configuration uses four chains, 1,000 iterations per chain, and 500 warm-up iterations per chain, with <code>adapt_delta = 0.95</code> and <code>max_treedepth = 12</code>.</p>
-<p>Model convergence and sampling quality are evaluated using the potential scale reduction statistic (()), effective sample sizes, trace plots, and checks for divergent transitions or other sampling warnings. Posterior estimates are summarized using posterior point estimates and 95% credible intervals.</p>
-</section>
-</section>
-</section>
-<section id="results-and-discussion" class="level3 analysis-results">
-<h3 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h3>
 </section>
 <section id="conclusion" class="level3 conc">
 <h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
