@@ -204,13 +204,13 @@ window.Quarto = {
 <p><span class="citation" data-cites="Morgan2022-hs">Morgan, Douthat, and Lin (<a href="#ref-Morgan2022-hs" role="doc-biblioref">2022</a>)</span> provides the primary empirical source for the present study. The study examined approximately 170,000 housing observations and evaluated the relationship between evacuation zone changes and housing prices using ordinary least squares regression with a spatial error component and a difference in differences frame. The analysis also incorporates a broad set of housing, geographic, demographic, and amenity variables. They found several of these characteristics, including distance from shoreline, amenities, and demographic variables to be statistically significantly associated with housing prices.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/Evac.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p><img src="images/Evac.png" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption>Evacuation Zones for State <span class="citation" data-cites="Morgan2022-hs">Morgan, Douthat, and Lin (<a href="#ref-Morgan2022-hs" role="doc-biblioref">2022</a>)</span></figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/evac2.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
+<p><img src="images/evac2.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption>Evacuation Zones by Year <span class="citation" data-cites="Morgan2022-hs">Morgan, Douthat, and Lin (<a href="#ref-Morgan2022-hs" role="doc-biblioref">2022</a>)</span></figcaption>
 </figure>
 </div>
@@ -336,11 +336,10 @@ Rather than assuming that every property will follow an identical independent re
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pdsub <span class="ot">&lt;-</span> pinellasdata <span class="sc">%&gt;%</span> <span class="fu">select</span>(adj_price, sale_year, heated_area, acreage, quality, stories, foundation, frontage, seawall)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(pdsub<span class="sc">$</span>quality)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(pdsub<span class="sc">$</span>stories)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Average"       "Fair"          "Above Average" "Excellent"    
-[5] "Minimal"       "Superior"     </code></pre>
+<pre><code>[1]  2  1  3  4  6 12</code></pre>
 </div>
 </div>
 <p><strong>Table 1a. Property Characteristics</strong></p>
@@ -408,12 +407,6 @@ Rather than assuming that every property will follow an identical independent re
 </table>
 <p><strong>Table 1b. Categorical Property Characteristics</strong></p>
 <table class="table">
-<colgroup>
-<col style="width: 21%">
-<col style="width: 21%">
-<col style="width: 28%">
-<col style="width: 28%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Variable</th>
@@ -438,25 +431,25 @@ Rather than assuming that every property will follow an identical independent re
 <tr class="odd">
 <td></td>
 <td>Above Average</td>
-<td style="text-align: right;"><code>r(sum(pdsub$quality == "Above Average" | pdsub$quality == "Excellent" | pdsub$quality == "Superior", na.rm = TRUE)</code></td>
+<td style="text-align: right;">36660</td>
 <td style="text-align: right;">13.7265327</td>
 </tr>
 <tr class="even">
 <td>Stories</td>
 <td>1 (Reference)</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">236893</td>
+<td style="text-align: right;">78.6931044</td>
 </tr>
 <tr class="odd">
 <td></td>
 <td>2</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">26603</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td></td>
 <td>3+</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">3578</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
@@ -598,19 +591,19 @@ Rather than assuming that every property will follow an identical independent re
 <h5 class="anchored" data-anchor-id="distribution">Distribution</h5>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/logadjustedsaleprice.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p><img src="images/logadjustedsaleprice.png" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption>Log Adjusted Sale Price</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/laspbyperiod.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p><img src="images/laspbyperiod.png" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption>Log Adjusted Sale Price by Period</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/laspbyevaczone.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p><img src="images/laspbyevaczone.png" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption>Log Adjusted Sale Price by Evacuation Zone</figcaption>
 </figure>
 </div>
