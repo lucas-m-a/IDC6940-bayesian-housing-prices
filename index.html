@@ -149,7 +149,7 @@ window.Quarto = {
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
-  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a></li>
+  <li><a href="#analysis-and-results" id="toc-analysis-and-results" class="nav-link" data-scroll-target="#analysis-and-results">Analysis and Results</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#readings" id="toc-readings" class="nav-link" data-scroll-target="#readings">Readings</a></li>
   </ul>
@@ -192,8 +192,9 @@ window.Quarto = {
 <li>fix year, median, mode</li>
 </ul>
 </div>
-<section id="introduction" class="level3 introduction">
+<section id="introduction" class="level3">
 <h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+<div class="introduction">
 <p>This study extends the empirical housing price analysis of <span class="citation" data-cites="Morgan2022-hs">Morgan, Douthat, and Lin (<a href="#ref-Morgan2022-hs" role="doc-biblioref">2022</a>)</span>, which examined the relationship between evacuation zone changes and residential property values in Pinellas County, Florida while accounting for different socioeconomic, geographic, and housing characteristics. <span class="citation" data-cites="Morgan2022-hs">Morgan, Douthat, and Lin (<a href="#ref-Morgan2022-hs" role="doc-biblioref">2022</a>)</span> used OLS with spatial error model (SEM) along with Difference in Differences (DID). The study presented intends to build on that approach by incorporating Bayesian and hierarchical methods and by more directly modeling residual spatial dependence through a spatial autoregressive (SAR) structure. The resulting Bayesian hierarchical spatial model aims to integrate three distinct statistical modeling strategies: hierarchical structure, Bayesian inference, and spatial autoregression.</p>
 <p>The hierarchical component is intended to account for the nested and clustered structure of housing data by allowing geographic groups to have their own group level effects and, where applicable, group specified slopes. <span class="citation" data-cites="galecki2013">Galecki and Burzykowski (<a href="#ref-galecki2013" role="doc-biblioref">2013</a>)</span> describe mixed-effects models that allow researchers to “model both the mean structure and the variance-covariance structure of the response variable” while accommodating data where “observations are grouped or clustered”. When considering the study at hand, this approach allows for the relationship between housing prices and selected predictors to vary more appropriately.</p>
 <p>The Bayesian framework replaces fixed point estimation with full posterior probability distributions for every parameter, conditional on observed data and specified prior distributions. As <span class="citation" data-cites="Johnson2022-bd">Johnson, Ott, and Dogucu (<a href="#ref-Johnson2022-bd" role="doc-biblioref">2022</a>)</span> explain, Bayesian methods excel because they “provide a natural framework for updating our understanding of the world as new evidence becomes available, fully capturing parameter uncertainty through posterior distributions rather than relying on asymptotic p-values”. This methodology also allows prior information from existing housing and environmental research to inform model specification. Housing prices may violate the classical assumption of independent observations due to shared location amenities, coastal proximity, and unobserved neighborhood externalities. As <span class="citation" data-cites="anselin1988spatial">Anselin (<a href="#ref-anselin1988spatial" role="doc-biblioref">1988</a>)</span> highlights in his foundational text, “The spatial dimension in economic data implies that observations located in close proximity are dependent, requiring explicit modeling of the spatial error structure to avoid biased standard errors and spurious inferences”. Our Bayesian hierarchical SAR model absorbs latent spatial spillovers allowing for these proximity errors to not affect our estimates.</p>
@@ -227,10 +228,11 @@ window.Quarto = {
 <p>When evaluated collectively, the resulting Bayesian hierarchical SAR model is therefore motivated by findings complementary to the associated methodological and empirical literature. The hierarchical component will address variation among groups, while the SAR component will capture spatial dependence in housing prices through adjacent observations. The Bayesian approach provides a coherent methodology for estimating these components and quantifying uncertainty.<br>
 Rather than assuming that every property will follow an identical independent relationship between the predicting characteristics and price, the proposed model recognizes the geographic structures of housing markets more closely. Properties are embedded within neighborhoods and larger geographic areas, and those locations themselves contain spatial relationships. A coastal housing market in which environmental exposure, evacuation zones, shoreline proximity, amenity integration, and other geographically distributed factors may jointly influence property values.</p>
 <p>The literature thus provides a rationale both empirical and methodological for the extension of the existing housing price analysis. Previous research shows an established relationship between environmental risk and property values while the spatial, hierarchical, and Bayesian research provides more flexible and accurate approaches to modeling those relationships. The proposed approach builds on these foundations by incorporating spatial autoregression and hierarchical variation into a Bayesian frame with the objective of obtaining estimates that more appropriately reflect the geographic organization and uncertainty inherent to the housing price data.</p>
+</div>
 </section>
-<section id="methods" class="level3 methods">
+<section id="methods" class="level3">
 <h3 class="anchored" data-anchor-id="methods">Methods</h3>
-<section id="model-overview" class="level4">
+<section id="model-overview" class="level4 methods">
 <h4 class="anchored" data-anchor-id="model-overview">Model Overview</h4>
 <p>The primary model used in this study is a Bayesian hierarchical simultaneous autoregressive (SAR) spatial error model. Bayesian estimation combines prior distributions for model parameters with observed data to estimate relationships between housing prices and property characteristics. The hierarchical component allows each city to have its own varying intercept, accounting for differences in baseline housing prices across cities. The SAR spatial error component accounts for spatial dependence among nearby properties that may not be explained by the included predictors.</p>
 <p>The response variable is the natural logarithm of adjusted sale price, defined as (y_i = (P_i)), where (P_i) represents the adjusted sale price of property (i). The model examines associations between housing prices, proximity to water, property characteristics, and differences across cities while accounting for spatial dependence. The analysis estimates associations rather than causal effects.</p>
@@ -283,10 +285,11 @@ b_j \sim
 </section>
 </section>
 </section>
-<section id="results-and-discussion" class="level3 analysis-results">
-<h3 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h3>
-<section id="data" class="level4">
-<h4 class="anchored" data-anchor-id="data">Data</h4>
+<section id="analysis-and-results" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-and-results">Analysis and Results</h3>
+<div class="analysis-results">
+<section id="exploratory-data-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="exploratory-data-analysis">Exploratory Data Analysis</h4>
 <section id="variable-definitions" class="level5">
 <h5 class="anchored" data-anchor-id="variable-definitions">Variable Definitions</h5>
 <table class="table">
@@ -693,6 +696,7 @@ b_j \sim
 </div>
 </section>
 </section>
+</div>
 </section>
 <section id="conclusion" class="level3 conc">
 <h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
