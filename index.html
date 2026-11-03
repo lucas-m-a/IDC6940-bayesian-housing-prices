@@ -185,11 +185,8 @@ window.Quarto = {
 <p><strong>Lucas Alderfer and Hunter Evans</strong></p>
 <ul>
 <li>fix lit review/ intro (render down)</li>
-<li>round descriptive tables</li>
 <li>remove some dist stuff</li>
 <li>1-2 sentences each desc table</li>
-<li>fix var def table</li>
-<li>fix year, median, mode</li>
 </ul>
 </div>
 <section id="introduction" class="level3">
@@ -294,103 +291,92 @@ b_j \sim
 <h5 class="anchored" data-anchor-id="variable-definitions">Variable Definitions</h5>
 <table class="table">
 <colgroup>
-<col style="width: 23%">
-<col style="width: 27%">
-<col style="width: 13%">
-<col style="width: 34%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Variable</th>
-<th>Definition</th>
-<th>Type</th>
-<th>Variable Info</th>
+<th>Role / type</th>
+<th>Definition and coding</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Price</td>
-<td>Sale price (natural log transformation)</td>
-<td>Continuous</td>
-<td>Response variable</td>
+<td><code>log_price</code></td>
+<td>Response; continuous</td>
+<td>Natural logarithm of adjusted sale price (<code>log(adj_price)</code> for positive adjusted prices).</td>
 </tr>
 <tr class="even">
-<td>Sale year</td>
-<td>Year in which the property was sold</td>
-<td>Continuous</td>
-<td>*</td>
+<td><code>sale_year_c</code></td>
+<td>Predictor; continuous</td>
+<td>Sale year centered at 2000 (<code>sale_year - 2000</code>); one unit represents one additional year.</td>
 </tr>
 <tr class="odd">
-<td>Frontage</td>
-<td>Lake + Pond = Lake; Bay + Tampa Bay = Bay; Gulf of Mexico = Gulf of Mexico; all other categories = Other</td>
-<td>Categorical</td>
-<td>Other = reference</td>
+<td><code>frontage_group</code></td>
+<td>Predictor; categorical</td>
+<td>Frontage category: None (reference), Lake, Bay, Gulf of Mexico, or Other.</td>
 </tr>
 <tr class="even">
-<td>Sea wall</td>
-<td>Whether the property has a sea wall</td>
-<td>Binary</td>
-<td>No = reference</td>
+<td><code>seawall_group</code></td>
+<td>Predictor; binary categorical</td>
+<td>Seawall status: No (reference) or Yes. Unknown/unrecognized source labels are left missing and removed by complete-case filtering.</td>
 </tr>
 <tr class="odd">
-<td>CCCL distance</td>
-<td>Distance from the property to the CCCL</td>
-<td>Continuous</td>
-<td>Leave out of first run due to potential multicollinearity</td>
+<td><code>cccl_distance</code> / <code>cccl_distance_b</code></td>
+<td>Predictor; continuous</td>
+<td>Distance to the Coastal Construction Control Line. OLS uses <code>cccl_distance</code>; Bayesian models use standardized <code>cccl_distance_b</code>.</td>
 </tr>
 <tr class="even">
-<td>Tampa Bay distance</td>
-<td>Distance from the property to Tampa Bay</td>
-<td>Continuous</td>
-<td>Leave out of first run due to potential multicollinearity</td>
+<td><code>tb_distance</code> / <code>tb_distance_b</code></td>
+<td>Predictor; continuous</td>
+<td>Distance to Tampa Bay. OLS uses <code>tb_distance</code>; Bayesian models use standardized <code>tb_distance_b</code>.</td>
 </tr>
 <tr class="odd">
-<td>ICW distance</td>
-<td>Distance from the property to the Intracoastal Waterway</td>
-<td>Continuous</td>
-<td>Consider separately due to potential multicollinearity</td>
+<td><code>quality_group</code></td>
+<td>Predictor; categorical</td>
+<td>Fair (Minimal and Fair source categories), Average (reference), or Above Average (Superior, Excellent, and Above Average source categories).</td>
 </tr>
 <tr class="even">
-<td>Quality</td>
-<td>Minimal + Fair = Fair; Average = Average; Superior + Excellent + Above Average = Above Average</td>
-<td>Categorical</td>
-<td>Average = reference</td>
+<td><code>heated_area</code> / <code>heated_area_b</code></td>
+<td>Predictor; continuous</td>
+<td>Heated living area in the source data. Bayesian models use standardized <code>heated_area_b</code>.</td>
 </tr>
 <tr class="odd">
-<td>Heated area</td>
-<td>Heated living area of the property</td>
-<td>Continuous</td>
-<td>*</td>
+<td><code>acreage</code> / <code>acreage_b</code></td>
+<td>Predictor; continuous</td>
+<td>Property acreage. Bayesian models use standardized <code>acreage_b</code>.</td>
 </tr>
 <tr class="even">
-<td>Acreage</td>
-<td>Property acreage</td>
-<td>Continuous</td>
-<td>*</td>
+<td><code>barrier_municipality</code></td>
+<td>Predictor; binary categorical</td>
+<td>Barrier or Non-Barrier (reference), based on the municipality list defined in the code.</td>
 </tr>
 <tr class="odd">
-<td>Site city</td>
-<td>Municipality/city where the property is located</td>
-<td>Hierarchical</td>
-<td>*</td>
+<td><code>stories_group</code></td>
+<td>Predictor; categorical</td>
+<td>Number of stories grouped as 1 (reference), 2, or 3+.</td>
 </tr>
 <tr class="even">
-<td>Barrier island municipality</td>
-<td>Whether the municipality is located on a barrier island</td>
-<td>Binary</td>
-<td>Non-barrier = reference</td>
+<td><code>foundation_group</code></td>
+<td>Predictor; binary categorical</td>
+<td>Yes if the source foundation text contains “CONTINUOUS”; otherwise No for nonmissing labels. No is the reference category.</td>
 </tr>
 <tr class="odd">
-<td>Stories</td>
-<td>1 = 1 story; 2 = 2 stories; 3+ = 3 or more stories</td>
-<td>Categorical</td>
-<td>1 = reference</td>
+<td><code>site_city</code></td>
+<td>Hierarchical grouping variable</td>
+<td>Municipality identifier used for the varying intercept in both Bayesian models; not a fixed-effect predictor.</td>
 </tr>
 <tr class="even">
-<td>Foundation</td>
-<td>Whether the property has a continuous footing foundation</td>
-<td>Binary</td>
-<td>No = reference</td>
+<td><code>x_coord</code>, <code>y_coord</code></td>
+<td>Spatial coordinates</td>
+<td>Coordinates used to construct the spatial-neighbor graph; not included as regression predictors. If coordinates are longitude/latitude, they are projected to UTM Zone 17N for neighbor calculations.</td>
+</tr>
+<tr class="odd">
+<td><code>uid</code>, <code>parcelid</code></td>
+<td>Identifiers, if present</td>
+<td>Retained only as source identifiers when available; not used as predictors.</td>
 </tr>
 </tbody>
 </table>
@@ -449,43 +435,44 @@ b_j \sim
 <td style="text-align: right;">2.67074^{5}</td>
 <td style="text-align: right;">1.1939187^{5}</td>
 <td style="text-align: right;">1.5525905^{5}</td>
-<td style="text-align: right;">82.195</td>
+<td style="text-align: right;">82.2</td>
 <td style="text-align: right;">1.8872377^{7}</td>
 </tr>
 <tr class="even">
 <td>Log Sale Price</td>
-<td style="text-align: right;">2.67074^{5}</td>
-<td style="text-align: right;">11.324</td>
-<td style="text-align: right;">0.887</td>
-<td style="text-align: right;">4.409</td>
-<td style="text-align: right;">16.753</td>
+<td style="text-align: right;">2.67076^{5}</td>
+<td style="text-align: right;">11.32</td>
+<td style="text-align: right;">0.89</td>
+<td style="text-align: right;">4.41</td>
+<td style="text-align: right;">16.75</td>
 </tr>
 <tr class="odd">
-<td>Sale Year</td>
+<td>Sale Year*</td>
 <td style="text-align: right;">2.67074^{5}</td>
 <td style="text-align: right;">2006</td>
-<td style="text-align: right;">5.2591327</td>
+<td style="text-align: right;">*</td>
 <td style="text-align: right;">2000</td>
 <td style="text-align: right;">2016</td>
 </tr>
 <tr class="even">
 <td>Heated Area (sq. ft.)</td>
-<td style="text-align: right;">267074</td>
-<td style="text-align: right;">1586.4659533</td>
-<td style="text-align: right;">779.7027423</td>
+<td style="text-align: right;">2.67074^{5}</td>
+<td style="text-align: right;">1586.47</td>
+<td style="text-align: right;">779.7</td>
 <td style="text-align: right;">252</td>
 <td style="text-align: right;">1.9578^{4}</td>
 </tr>
 <tr class="odd">
 <td>Acreage</td>
-<td style="text-align: right;">267074</td>
-<td style="text-align: right;">0.2104691</td>
-<td style="text-align: right;">0.2194995</td>
+<td style="text-align: right;">2.67074^{5}</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">0.22</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">42.573</td>
+<td style="text-align: right;">42.57</td>
 </tr>
 </tbody>
 </table>
+<p>Sale Year table measures reflect the count, median, minimum, and maximum respectively.</p>
 <p><strong>Table 1b. Categorical Property Characteristics</strong></p>
 <table class="table">
 <thead>
@@ -500,54 +487,54 @@ b_j \sim
 <tr class="odd">
 <td>Quality</td>
 <td>Fair</td>
-<td style="text-align: right;">23657</td>
-<td style="text-align: right;">8.8578446</td>
+<td style="text-align: right;">2.3657^{4}</td>
+<td style="text-align: right;">8.86</td>
 </tr>
 <tr class="even">
 <td></td>
 <td>Average (Reference)</td>
-<td style="text-align: right;">206757</td>
-<td style="text-align: right;">77.4156226</td>
+<td style="text-align: right;">2.06757^{5}</td>
+<td style="text-align: right;">77.42</td>
 </tr>
 <tr class="odd">
 <td></td>
 <td>Above Average</td>
-<td style="text-align: right;">36660</td>
-<td style="text-align: right;">13.7265327</td>
+<td style="text-align: right;">3.666^{4}</td>
+<td style="text-align: right;">13.73</td>
 </tr>
 <tr class="even">
 <td>Stories</td>
 <td>1 (Reference)</td>
-<td style="text-align: right;">236893</td>
-<td style="text-align: right;">78.6931044</td>
+<td style="text-align: right;">2.36893^{5}</td>
+<td style="text-align: right;">78.69</td>
 </tr>
 <tr class="odd">
 <td></td>
 <td>2</td>
-<td style="text-align: right;">26603</td>
-<td style="text-align: right;">8.8372078</td>
+<td style="text-align: right;">2.6603^{4}</td>
+<td style="text-align: right;">8.84</td>
 </tr>
 <tr class="even">
 <td></td>
 <td>3+</td>
 <td style="text-align: right;">3578</td>
-<td style="text-align: right;">1.1885701</td>
+<td style="text-align: right;">1.19</td>
 </tr>
 <tr class="odd">
 <td>Foundation</td>
 <td>No (Reference)</td>
-<td style="text-align: right;">14378</td>
-<td style="text-align: right;">5.6898408</td>
+<td style="text-align: right;">1.4378^{4}</td>
+<td style="text-align: right;">5.69</td>
 </tr>
 <tr class="even">
 <td></td>
 <td>Yes</td>
-<td style="text-align: right;">252696</td>
-<td style="text-align: right;">94.6164733</td>
+<td style="text-align: right;">2.52696^{5}</td>
+<td style="text-align: right;">94.62</td>
 </tr>
 </tbody>
 </table>
-<p>The original data was combined such that minimal and fair quality became fair, average is Average, and superior, excellent and above average were combined to Above Average</p>
+<p>The original data was combined such that minimal and fair quality became fair, average is Average, and superior, excellent and above average were combined to Above Average. Denominators used in calculating percentages reflect the total number of non missing observations.</p>
 <p><strong>Table 1c. Waterfront Characteristics</strong></p>
 <table class="table">
 <thead>
@@ -562,42 +549,42 @@ b_j \sim
 <tr class="odd">
 <td>Frontage</td>
 <td>Other (Reference)</td>
-<td style="text-align: right;">255944</td>
-<td style="text-align: right;">95.8326157</td>
+<td style="text-align: right;">2.55944^{5}</td>
+<td style="text-align: right;">95.83</td>
 </tr>
 <tr class="even">
 <td></td>
 <td>Lake</td>
 <td style="text-align: right;">5996</td>
-<td style="text-align: right;">2.2450707</td>
+<td style="text-align: right;">2.25</td>
 </tr>
 <tr class="odd">
 <td></td>
 <td>Bay</td>
 <td style="text-align: right;">4393</td>
-<td style="text-align: right;">1.6448625</td>
+<td style="text-align: right;">1.64</td>
 </tr>
 <tr class="even">
 <td></td>
 <td>Gulf of Mexico</td>
 <td style="text-align: right;">741</td>
-<td style="text-align: right;">0.2774512</td>
+<td style="text-align: right;">0.28</td>
 </tr>
 <tr class="odd">
 <td>Sea Wall</td>
 <td>No (Reference)</td>
-<td style="text-align: right;">252464</td>
-<td style="text-align: right;">94.529606</td>
+<td style="text-align: right;">2.52464^{5}</td>
+<td style="text-align: right;">94.53</td>
 </tr>
 <tr class="even">
 <td></td>
 <td>Yes</td>
-<td style="text-align: right;">14610</td>
-<td style="text-align: right;">5.470394</td>
+<td style="text-align: right;">1.461^{4}</td>
+<td style="text-align: right;">5.47</td>
 </tr>
 </tbody>
 </table>
-<p>Lake + Pond = Lake; Bay + Tampa Bay = Bay; Gulf of Mexico = Gulf of Mexico; all other categories = Other</p>
+<p>The original data was combined such that lake and pond entries became lake, bay and tampa bay became bay, Gulf of Mexico stayed Gulf of Mexico, and golf course and river/canal became other.</p>
 <p><strong>Table 1d. Regional Characteristics</strong></p>
 <table class="table">
 <colgroup>
@@ -618,14 +605,14 @@ b_j \sim
 <tr class="odd">
 <td>Barrier Island Municipality</td>
 <td>Non-barrier (Reference)</td>
-<td style="text-align: right;">257520</td>
-<td style="text-align: right;">96.4227143</td>
+<td style="text-align: right;">2.5752^{5}</td>
+<td style="text-align: right;">96.42</td>
 </tr>
 <tr class="even">
 <td></td>
 <td>Barrier island</td>
 <td style="text-align: right;">9554</td>
-<td style="text-align: right;">3.5772857</td>
+<td style="text-align: right;">3.58</td>
 </tr>
 <tr class="odd">
 <td>Site City</td>
@@ -658,19 +645,19 @@ b_j \sim
 <tbody>
 <tr class="odd">
 <td>CCCL Distance (miles)</td>
-<td style="text-align: right;">267074</td>
-<td style="text-align: right;">7780.8461911</td>
-<td style="text-align: right;">3931.3673975</td>
-<td style="text-align: right;">0.0050042</td>
-<td style="text-align: right;">1.8783883^{4}</td>
+<td style="text-align: right;">2.67074^{5}</td>
+<td style="text-align: right;">7780.85</td>
+<td style="text-align: right;">3931.37</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">1.878388^{4}</td>
 </tr>
 <tr class="even">
 <td>Tampa Bay Distance (miles)</td>
-<td style="text-align: right;">267074</td>
-<td style="text-align: right;">6791.502144</td>
-<td style="text-align: right;">4397.7725966</td>
+<td style="text-align: right;">2.67074^{5}</td>
+<td style="text-align: right;">6791.5</td>
+<td style="text-align: right;">4397.77</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">2.1807165^{4}</td>
+<td style="text-align: right;">2.180717^{4}</td>
 </tr>
 </tbody>
 </table>
