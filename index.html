@@ -222,11 +222,13 @@ window.Quarto = {
 <p>The spatial model estimates housing price associations while simultaneously capturing city baseline differences and continuous spatial dependence via a GMRF:</p>
 <p><span class="math display">\[y_i = \mathbf{x}_i^\top \boldsymbol{\beta} + b_{j[i]} + \xi(\mathbf{s}_i) + \epsilon_i\]</span> <span class="math display">\[\mathbf{b} \sim \mathcal{N}\left(\mathbf{0}, \tau_{\text{city}}^{-1} \mathbf{I}\right), \quad \boldsymbol{\epsilon} \sim \mathcal{N}\left(\mathbf{0}, \tau_\epsilon^{-1} \mathbf{I}\right)\]</span></p>
 <p>where:</p>
-<p><span class="math inline">\(\mathbf{x}_i\)</span>: Vector of standardized continuous predictors and categorical dummy indicators for property <span class="math inline">\(i\)</span>.</p>
-<p><span class="math inline">\(\boldsymbol{\beta}\)</span>: Vector of fixed-effect regression coefficients.</p>
-<p><span class="math inline">\(b_{j[i]} \sim \mathcal{N}(0, \sigma^2_{\text{city}})\)</span>: Varying intercept for city <span class="math inline">\(j\)</span> containing property <span class="math inline">\(i\)</span>, capturing baseline city price differences.</p>
-<p><span class="math inline">\(\xi(\mathbf{s}_i)\)</span>: Continuous spatial random effect evaluated at property geographic coordinates <span class="math inline">\(\mathbf{s}_i = (x_i, y_i)\)</span> using a Matérn SPDE representation.</p>
-<p><span class="math inline">\(\epsilon_i \sim \mathcal{N}(0, \sigma^2_\epsilon)\)</span>: Independent Gaussian residual error term.</p>
+<ul>
+<li><p><span class="math inline">\(\mathbf{x}_i\)</span>: Vector of standardized continuous predictors and categorical dummy indicators for property <span class="math inline">\(i\)</span>.</p></li>
+<li><p><span class="math inline">\(\boldsymbol{\beta}\)</span>: Vector of fixed-effect regression coefficients.</p></li>
+<li><p><span class="math inline">\(b_{j[i]} \sim \mathcal{N}(0, \sigma^2_{\text{city}})\)</span>: Varying intercept for city <span class="math inline">\(j\)</span> containing property <span class="math inline">\(i\)</span>, capturing baseline city price differences.</p></li>
+<li><p><span class="math inline">\(\xi(\mathbf{s}_i)\)</span>: Continuous spatial random effect evaluated at property geographic coordinates <span class="math inline">\(\mathbf{s}_i = (x_i, y_i)\)</span> using a Matérn SPDE representation.</p></li>
+<li><p><span class="math inline">\(\epsilon_i \sim \mathcal{N}(0, \sigma^2_\epsilon)\)</span>: Independent Gaussian residual error term.</p></li>
+</ul>
 </section>
 <section id="spde-mesh-construction-and-spatial-gaussian-process" class="level4">
 <h4 class="anchored" data-anchor-id="spde-mesh-construction-and-spatial-gaussian-process">SPDE Mesh Construction and Spatial Gaussian Process</h4>
