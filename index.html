@@ -206,9 +206,7 @@ window.Quarto = {
 </section>
 <section id="methods" class="level3">
 <h3 class="anchored" data-anchor-id="methods">Methods</h3>
-<section id="model-overview" class="level4 methods">
-<h4 class="anchored" data-anchor-id="model-overview">Model Overview</h4>
-<p>Methods</p>
+<div class="methods">
 <p>This study investigates the determinants of residential housing prices in Pinellas County, Florida, utilizing a sample of around 245,000 house sales spanning the years 2000 through 2015 by using the Bayesian framework. To account for both large scale spatial structures and local spatial differences in pricing, the analysis employs Integrated Nested Laplace Approximations (INLA) coupled a hierarchical structure varying by city. The primary spatial model is specified as a full Bayesian spatial Matérn SPDE model incorporating city level random effects.</p>
 <p>Variable Specifications and Transformations</p>
 <p>The response variable is the natural logarithm of the adjusted sale price (adjusted by the Case-Shiller Index) , denoted as <span class="math inline">\(y_i = \ln(P_i)\)</span> for property <span class="math inline">\(i\)</span>. Modeling log-adjusted prices stabilizes variance and allows for the model to accommodate properties ranging from low-cost homes in the multi-millions. The set of explanatory variables captures structural property characteristics, environmental and hazard proximity, and temporal trends:</p>
@@ -233,7 +231,7 @@ window.Quarto = {
 <p>where <span class="math inline">\(\mathbf{u} = (u_1, \dots, u_K)^\top \sim \mathcal{N}(\mathbf{0}, \mathbf{Q}^{-1})\)</span> is a Gaussian Markov Random Field vector on the mesh nodes with sparse precision matrix <span class="math inline">\(\mathbf{Q}(\kappa, \tau)\)</span>, and <span class="math inline">\(\mathbf{A}\)</span> is the sparse spatial projection matrix mapping mesh vertices <span class="math inline">\(k\)</span> to observation coordinates <span class="math inline">\(i\)</span> (Lindgren et al.&nbsp;(2011)).</p>
 <p>Bayesian Estimation and Diagnostics</p>
 <p>Unlike traditional Bayesian methods that use computationally intensive MCMC sampling, the model is estimated via deterministic numerical integration using R-INLA (INLA package version 25.10.19) with the simplified Laplace approximation strategy. Model performance and predictive accuracy are evaluated using goodness-of-fit metrics including Root Mean Squared Error (RMSE) and Mean Absolute Error (MAE).</p>
-</section>
+</div>
 </section>
 <section id="analysis-and-results" class="level3">
 <h3 class="anchored" data-anchor-id="analysis-and-results">Analysis and Results</h3>
