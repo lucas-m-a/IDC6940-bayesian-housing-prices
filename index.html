@@ -152,7 +152,6 @@ window.Quarto = {
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
   <li><a href="#analysis-and-results" id="toc-analysis-and-results" class="nav-link" data-scroll-target="#analysis-and-results">Analysis and Results</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-  <li><a href="#links" id="toc-links" class="nav-link" data-scroll-target="#links">Links</a></li>
   <li><a href="#bibliography" id="toc-bibliography" class="nav-link" data-scroll-target="#bibliography">Bibliography</a></li>
   </ul>
 </nav>
@@ -649,29 +648,38 @@ window.Quarto = {
 
 </div>
 </section>
-<section id="links" class="level3 links-section">
-<h3 class="links-section anchored" data-anchor-id="links">Links</h3>
-<section id="home" class="level4 sidebar-link">
-<h4 class="sidebar-link anchored" data-anchor-id="home"><a href="index.html">Home</a></h4>
-</section>
-<section id="presentation-slides" class="level4 sidebar-link">
-<h4 class="sidebar-link anchored" data-anchor-id="presentation-slides"><a href="slides.html">Presentation Slides</a></h4>
-</section>
-<section id="appendix" class="level4 sidebar-link">
-<h4 class="sidebar-link anchored" data-anchor-id="appendix"><a href="appendix.html">Appendix</a></h4>
-</section>
-<section id="preliminary-readings" class="level4 sidebar-link">
-<h4 class="sidebar-link anchored" data-anchor-id="preliminary-readings"><a href="readings.html">Preliminary Readings</a></h4>
-</section>
-</section>
 <section id="bibliography" class="level3">
+<h3 class="anchored" data-anchor-id="bibliography">Bibliography</h3>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
+  const toc = document.querySelector("#TOC");
+
+  if (!toc) return;
+
+  const links = document.createElement("div");
+
+  links.className = "custom-toc-links";
+
+  links.innerHTML = `
+    <div class="custom-toc-links-title">LINKS</div>
+
+    <a href="index.html">Home</a>
+    <a href="slides.html">Presentation Slides</a>
+    <a href="Appendix.html">Appendix</a>
+    <a href="readings.html">Reading Summaries</a>
+  `;
+
+  toc.appendChild(links);
+
+});
+</script>
 
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Bibliography</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-anselin1988spatial" class="csl-entry" role="listitem">
 Anselin, Luc. 1988. <em>Spatial Econometrics: Methods and Models</em>. Vol. 2. Dordrecht: Kluwer Academic Publishers.
 </div>
