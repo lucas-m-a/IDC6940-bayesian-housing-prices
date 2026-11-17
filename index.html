@@ -197,7 +197,7 @@ window.Quarto = {
 <p>The spatial component of the model proposed is based on a Matérn Gaussian random field. Matérn models provide a more accommodating representation of spatial covariance through parameters that govern the magnitude and spatial range of dependence. The SPDE formulation developed for spatial modeling provides a more computationally efficient approach by expressing the continuous spatial process through a sparse Gaussian Markov random field defined over a triangulated spatial mesh (<span class="citation" data-cites="LFRHLJ_2011">Lindgren, Rue, and Lindström (<a href="#ref-LFRHLJ_2011" role="doc-biblioref">2011</a>)</span>). This approach became necessary as the dataset contains more than 260,000 property observations. Direct covariance based calculations attempted became too computationally difficult for the full dataset to move forward with more traditional Markov Chain approaches. The SPDE approach therein allows for the modeling of the geographic dependence and accommodating the computational requirements of the housing prices data. The mesh does not represent a a sample of observations but rather a finite dimensional representation of the latent spatial field. The full dataset of property observations can therefore contribute to the estimations while the latent spatial process is represented by a smaller collection of mesh vertices. The projection matrix used by INLA maps the latent spatial field from the mesh to the coordinates of the unobserved properties.</p>
 <p>Bayesian hierarchical modeling provides a comfortable framework for integrating these components while representing uncertainty in both fixed and latent effects. Instead of producing only point estimates for model parameters, Bayesian inference produces posterior distributions conditional on the observed data and specified priors. This lets uncertainty be quantifiable for fixed effects, municipality level random effects, the spatial field, and the hyperparameters overseeing the spatial process. Prior distributions can also be used to regularize more complex model components when estimating the latent spatial processes. Bayesian hierarchical spatial models are expressed through multiple levels. At our observation level, observed housing prices are modeled conditional on a linear prediction and an error distribution. In the process level, latent municipality effects and the continuos spatial field described unobserved geographic variation. At the parameter level, prior distributions inform the regression coefficients and hyperparameters associated with latent processes. <span class="citation" data-cites="Wikle_Zammit-Mangion_Cressie_2019">Wikle, Zammit-Mangion, and Cressie (<a href="#ref-Wikle_Zammit-Mangion_Cressie_2019" role="doc-biblioref">2019</a>)</span> describe hierarchical spatial models in this three part system of the observation, process, and parameter levels to separate measurement variation from latent spatial processes and parameter uncertainty.</p>
 <p>For the present study, the computational implementation of the proposed model used Integrated Nested Laplace Approximation. INLA was developed as a computationally efficient approach for Bayesian inference in latent Gaussian models and provides an alternative to computational intensive Markov chain Monte Carlo simulation methods for a wide range of hierarchical spatial models (<span class="citation" data-cites="Fuglstad2019-uv">Fuglstad et al. (<a href="#ref-Fuglstad2019-uv" role="doc-biblioref">2019</a>)</span>). <span class="citation" data-cites="Martins2013">Martins et al. (<a href="#ref-Martins2013" role="doc-biblioref">2013</a>)</span> provides a basis of demonstration for the use of R-INLA with spatial and spatio-temporal models and describe its application to models containing spatially structured latent effects. The proposed model combines a Gaussian observation model, hierarchical random effects, and a latent spatial process within the INLA methodology. Combining INLA and SPDE is therefore both computationally convenient and allows for a continuous spatial Bayesian model to be feasible for the large dataset. The SPDE formulation converts the latent Matérn field into a spare representation while INLA provides approximate posterior inferences for the resulting model. The resulting combination provides both spatial prediction and uncertainty quantifications while bypassing restrictions placed by the computational demand of dense covariance matrices.</p>
-<p>Empirical housing literature reviewed provides justification for the inclusion of environmental and geographic characteristics in the model. <span class="citation" data-cites="Bin2004-ty">Bin and Polasky (<a href="#ref-Bin2004-ty" role="doc-biblioref">2004</a>)</span> examined property values in North Caroline following Hurricane Floyd and found evidence to suggest that properties located within floodplains experienced more substantial pricing decreases relative to otherwise comparable properties outside of flood hazard areas. These findings help demonstrate the reflection of environmental exposures on housing markets and provide support for including similar measures within the present study. Coastal amenities provide another consideration to the spatial structure surrounding housing prices. Walls (2018) examined coastal development while incorporating hurricane risks and coastal amenities into a spatial simulation. The results indicated that coastal amenities have the potential to substantially influence development patterns even if hurricane risks are increased. Environmental characteristics may simultaneously represent exposures and location amenities. Coastline proximity, water features, and other preparatory features can therefore have effects that depend on the geographic context of the characteristics.</p>
+<p>Empirical housing literature reviewed provides justification for the inclusion of environmental and geographic characteristics in the model. <span class="citation" data-cites="Bin2004-ty">Bin and Polasky (<a href="#ref-Bin2004-ty" role="doc-biblioref">2004</a>)</span> examined property values in North Caroline following Hurricane Floyd and found evidence to suggest that properties located within floodplains experienced more substantial pricing decreases relative to otherwise comparable properties outside of flood hazard areas. These findings help demonstrate the reflection of environmental exposures on housing markets and provide support for including similar measures within the present study. Coastal amenities provide another consideration to the spatial structure surrounding housing prices. <span class="citation" data-cites="Walls_Magliocca_McConnell_2018">Walls, Magliocca, and McConnell (<a href="#ref-Walls_Magliocca_McConnell_2018" role="doc-biblioref">2018</a>)</span> examined coastal development while incorporating hurricane risks and coastal amenities into a spatial simulation. The results indicated that coastal amenities have the potential to substantially influence development patterns even if hurricane risks are increased. Environmental characteristics may simultaneously represent exposures and location amenities. Coastline proximity, water features, and other preparatory features can therefore have effects that depend on the geographic context of the characteristics.</p>
 <p>These findings have a strong relevance within our area of focus in Pinellas County, Florida. Housing values in Pinellas may reflect a combination of coastal amenities, environmental conditions, and other characteristics observed within the data. The same geographic features that create environmental risks can also provide or incentivize amenities that subsequently increase residential demands. <span class="citation" data-cites="Morgan2022-hs">Morgan, Douthat, and Lin (<a href="#ref-Morgan2022-hs" role="doc-biblioref">2022</a>)</span> provides the primary empirical source for the present study. The study examined approximately 170,000 housing observations and evaluated the relationship between evacuation zone changes and housing prices using ordinary least squares regression with a spatial error component and a difference in differences frame. The analysis also incorporates a broad set of housing, geographic, demographic, and amenity variables. They found several of these characteristics, including distance from shoreline, amenities, and demographic variables to be statistically significantly associated with housing prices.</p>
 <p>The present study therefore provides a methodological contribution to the original research. The literature thus provides a rationale both empirical and methodological for the extension of the existing housing price analysis. Previous research shows an established relationship between environmental risk and property values while the spatial, hierarchical, and Bayesian research provides more flexible and accurate approaches to modeling those relationships. The proposed approach builds on these foundations by incorporating the latent spatial field and hierarchical variation into a Bayesian frame with the objective of obtaining estimates that more appropriately reflect the geographic organization and uncertainty inherent to the housing price data.</p>
 </div>
@@ -586,12 +586,6 @@ Table&nbsp;1: Summary of Model Variables, Types, and Coding
 </tbody>
 </table>
 <p>The regional characteristics table summarizes the distribution of municipalites by barrier island status, including the number and percentage of observations located in a barrier island or non-barrier island municipality. It also reports the total number of distinct cities represented in the study sample.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/pinellasmap.jpg" class="img-fluid figure-img" style="width:40.0%"></p>
-<figcaption>City Map of Pinellas County</figcaption>
-</figure>
-</div>
 <p><strong>Table 1e. Distance Characteristics</strong></p>
 <table class="table">
 <colgroup>
@@ -632,21 +626,80 @@ Table&nbsp;1: Summary of Model Variables, Types, and Coding
 </tbody>
 </table>
 <p>The distance characteristics table presents descriptive statistics for the geographic distance variables including distance to the Coastal Construction Control Line (CCCL) and Tampa Bay. For each variable the table reports the number of nonmissing observations, mean, standard deviation,and minimum and maximum distances in miles.</p>
-<section id="data-distribution" class="level5">
-<h5 class="anchored" data-anchor-id="data-distribution">Data Distribution</h5>
+<p>An important part about the price of a home is the city where the home is located. Due to this, controlling location is crucial when modeling. Plot 1 shows the 27 cities in Pinellas County that are covered in this analysis.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/logadjustedsaleprice.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption>Log Adjusted Sale Price</figcaption>
+<p><img src="images/pinellasmap.jpg" class="img-fluid figure-img" style="width:40.0%"></p>
+<figcaption>City Map of Pinellas County</figcaption>
 </figure>
 </div>
+<p>The price of homes is generally right skewed in most counties in the United States due to the vast differences in home price. In this analysis we took the log of the adjusted home price to normalize the distribution. Plot 2 shows the histogram of the log adjusted price of homes sold in Pinellas County.</p>
+<p><img src="images/laspv2.png" class="img-fluid" style="width:80.0%" alt="Log Adjusted Sale Price"> Plot 3 merges the spatial aspect of Plot 1 and the adjusted price of Plot 2. Each point represents a property sold, with the color depicting the log adjusted price.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/laspbyperiod.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption>Log Adjusted Sale Price by Period</figcaption>
+<p><img src="INLAtest_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>Spatial</figcaption>
 </figure>
 </div>
 </section>
+<section id="model-comparison" class="level4">
+<h4 class="anchored" data-anchor-id="model-comparison">Model Comparison:</h4>
+<p>In this analysis we fit three models to compare. All three models are fit with the same set of predictors with a few minor changes when the structure of the model changes. Model 1 is a normal Ordinary Least Squares (OLS) with city added as a predictor since there is no hierarchical term for it. Model 2 is a Bayesian INLA with a hierarchical structure around city. Finally, Model 3 is our primary model, which is a Bayesian INLA with a spatial structure and a hierarchical structure around city. The models are compared using RMSE, MAE, Pseudo R-Square. The Bayesian models are additionally compared using DIC and WAIC. The results are in Table 2.</p>
+<table class="table">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 12%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">RMSE</th>
+<th style="text-align: right;">MAE</th>
+<th style="text-align: right;">Pseudo R²</th>
+<th style="text-align: right;">AIC</th>
+<th style="text-align: right;">DIC</th>
+<th style="text-align: right;">WAIC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1. OLS Hedonic Baseline</td>
+<td style="text-align: right;">0.690</td>
+<td style="text-align: right;">0.461</td>
+<td style="text-align: right;">0.402</td>
+<td style="text-align: right;">514735.1</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2. INLA Municipality Model</td>
+<td style="text-align: right;">0.679</td>
+<td style="text-align: right;">0.448</td>
+<td style="text-align: right;">0.422</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">506324.9</td>
+<td style="text-align: right;">503205.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3. Primary INLA Spatial Model</td>
+<td style="text-align: right;">0.609</td>
+<td style="text-align: right;">0.384</td>
+<td style="text-align: right;">0.534</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">460301.2</td>
+<td style="text-align: right;">457198.6</td>
+</tr>
+</tbody>
+</table>
+<p>The primary INLA Spatial model performs the best in all categories compared to the other two models. It has the lowest error (RMSE and MAE) and the highest Pseudo R^2 value, thus capturing the most accurate information and explaining the data the most. When comparing DIC and WAIC, the primary INLA spatial model is better in both categories compared to the Bayesian INLA without the spatial component.</p>
+</section>
+<section id="our-model-fit" class="level4">
+<h4 class="anchored" data-anchor-id="our-model-fit">Our Model Fit:</h4>
 </section>
 </div>
 </section>
@@ -706,6 +759,9 @@ Martins, Thiago G., Daniel Simpson, Finn Lindgren, and Håvard Rue. 2013. <span>
 </div>
 <div id="ref-Morgan2022-hs" class="csl-entry" role="listitem">
 Morgan, John Derek, Thomas Douthat, and Li-Hsiang Lin. 2022. <span>“On the Geographic Balance of Risk and Amenity: Changes in Evacuation Zones and Their Ripples in Housing Prices in Pinellas County, <span>FL</span>.”</span> <em>Pap. Appl. Geogr.</em>, July, 1–20.
+</div>
+<div id="ref-Walls_Magliocca_McConnell_2018" class="csl-entry" role="listitem">
+Walls, Margaret, Nicholas Magliocca, and Virginia McConnell. 2018. <span>“Modeling Coastal Land and Housing Markets: Understanding the Competing Influences of Amenities and Storm Risks.”</span> <em>Ocean &amp;Amp; Coastal Management</em> 157 (May): 95–110. <a href="https://doi.org/10.1016/j.ocecoaman.2018.01.021">https://doi.org/10.1016/j.ocecoaman.2018.01.021</a>.
 </div>
 <div id="ref-Wikle_Zammit-Mangion_Cressie_2019" class="csl-entry" role="listitem">
 Wikle, Christopher K., Andrew Zammit-Mangion, and Noel A. C. Cressie. 2019. <em>Spatio-Temporal Statistics with r</em>. CRC Press, Taylor; Francis Group.
