@@ -187,6 +187,305 @@ window.Quarto = {
 </header>
 
 
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SECTION 0: PACKAGES AND DATA IMPORT</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>required_packages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"tidyverse"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"janitor"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"lubridate"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sf"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sp"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"INLA"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ggplot2"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"scales"</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"patchwork"</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"broom"</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"knitr"</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"viridis"</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"viridisLite"</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Install packages from CRAN</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>cran_packages <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  required_packages,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(<span class="fu">installed.packages</span>())</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>cran_packages <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(cran_packages, <span class="st">"INLA"</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(cran_packages) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">install.packages</span>(</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    cran_packages,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">dependencies =</span> <span class="cn">TRUE</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- 0.2 Install INLA if missing ----</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co"># This uses the Windows binary repository for R 4.5.</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- 0.2 Install INLA if missing ----</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"INLA"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">timeout =</span> <span class="dv">600</span>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">install.packages</span>(</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INLA"</span>,</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">repos =</span> <span class="fu">c</span>(</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>      <span class="fu">getOption</span>(<span class="st">"repos"</span>),</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>      <span class="at">INLA =</span> <span class="st">"https://inla.r-inla-download.org/R/stable"</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">dependencies =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"binary"</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(INLA)</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(INLA)</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridisLite)</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>analysis_version <span class="ot">&lt;-</span> <span class="st">"pinellas_full_data_capstone_inla_spde_v1"</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> <span class="fu">paste0</span>(</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>  <span class="st">"G:/"</span>,</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>  <span class="st">".shortcut-targets-by-id/1IwJJwifiMkxN1ZtZ-lx4TooG6WGbO18w/"</span>,</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Alderfer and Evans/1-data/pinellasdata.csv"</span></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="co"># Confirm that the file exists before importing</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(data_path)) {</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(</span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>      <span class="st">"DATA FILE NOT FOUND.</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Check that the Google Drive location is available.</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Current path: "</span>,</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>      data_path</span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>required_17_columns <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>  <span class="st">"uid"</span>,</span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>  <span class="st">"parcelid"</span>,</span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sale_year"</span>,</span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>  <span class="st">"adj_price"</span>,</span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>  <span class="st">"heated_area"</span>,</span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>  <span class="st">"acreage"</span>,</span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>  <span class="st">"stories"</span>,</span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>  <span class="st">"quality"</span>,</span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>  <span class="st">"foundation"</span>,</span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seawall"</span>,</span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>  <span class="st">"cccl_distance"</span>,</span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>  <span class="st">"tb_distance"</span>,</span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>  <span class="st">"icw_distance"</span>,</span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>  <span class="st">"frontage"</span>,</span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>  <span class="st">"x_coord"</span>,</span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>  <span class="st">"y_coord"</span>,</span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>  <span class="st">"site_city"</span></span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- 0.7 Import the full dataset ----</span></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> data_path,</span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_select =</span> tidyselect<span class="sc">::</span><span class="fu">all_of</span>(required_17_columns),</span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(</span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>    <span class="at">.default =</span> readr<span class="sc">::</span><span class="fu">col_character</span>()</span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>  <span class="at">na =</span> <span class="fu">c</span>(</span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>    <span class="st">"NA"</span>,</span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>    <span class="st">"N/A"</span>,</span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>    <span class="st">"."</span>,</span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>    <span class="st">"null"</span>,</span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>    <span class="st">"NULL"</span>,</span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>    <span class="st">"*"</span></span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a>  <span class="at">progress =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+indexing pinellasdata.csv [---------------------------------] 1.39GB/s, eta:  0s
+indexing pinellasdata.csv [===============================] 854.65MB/s, eta:  0s
+indexing pinellasdata.csv [===============================] 854.51MB/s, eta:  0s
+                                                                                </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- 0.8 Verify imported dataset ----</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>import_summary <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Check =</span> <span class="fu">c</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"File exists"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Data object class"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Observations imported"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Variables imported"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Result =</span> <span class="fu">c</span>(</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.exists</span>(data_path),</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="fu">class</span>(raw_data), <span class="at">collapse =</span> <span class="st">", "</span>),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">format</span>(<span class="fu">nrow</span>(raw_data), <span class="at">big.mark =</span> <span class="st">","</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ncol</span>(raw_data)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(import_summary, <span class="at">caption =</span> <span class="st">"Data Import Verification"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Data Import Verification</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Check</th>
+<th style="text-align: left;">Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">File exists</td>
+<td style="text-align: left;">TRUE</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Data object class</td>
+<td style="text-align: left;">spec_tbl_df, tbl_df, tbl, data.frame</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Observations imported</td>
+<td style="text-align: left;">267,074</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Variables imported</td>
+<td style="text-align: left;">17</td>
+</tr>
+</tbody>
+</table>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>missing_summary <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Variable =</span> <span class="fu">names</span>(raw_data), <span class="at">Missing =</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(raw_data))) <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Missing))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(missing_summary, <span class="at">caption =</span> <span class="st">"Missing Values by Variable"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Missing Values by Variable</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: right;">Missing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">site_city</td>
+<td style="text-align: right;">3461</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">uid</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">parcelid</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sale_year</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">adj_price</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">heated_area</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">acreage</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">stories</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">quality</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">foundation</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">seawall</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cccl_distance</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tb_distance</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">icw_distance</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">frontage</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">x_coord</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">y_coord</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.data.frame</span>(raw_data)) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"Import failed: raw_data is not a data frame."</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">ncol</span>(raw_data) <span class="sc">!=</span> <span class="dv">17</span>) {</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Expected 17 columns but imported"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ncol</span>(raw_data)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">all</span>(required_17_columns <span class="sc">%in%</span> <span class="fu">names</span>(raw_data))) {</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"One or more required columns are missing."</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(raw_data) <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"The imported dataset contains zero rows."</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 <section id="introduction" class="level3">
 <h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
 <div class="introduction">
@@ -354,43 +653,44 @@ Table&nbsp;1: Summary of Model Variables, Types, and Coding
 <section id="descriptive-tables" class="level4">
 <h4 class="anchored" data-anchor-id="descriptive-tables">Descriptive Tables</h4>
 <div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pdsub <span class="ot">&lt;-</span> pinellasdata <span class="sc">%&gt;%</span> <span class="fu">select</span>(adj_price, sale_year, heated_area, acreage, quality, stories, foundation, frontage, seawall, cccl_distance, tb_distance, site_city)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pdsub<span class="sc">$</span>cont_foot <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(pdsub<span class="sc">$</span>foundation <span class="sc">==</span> <span class="st">"Continuous Footing"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>f_lake <span class="ot">&lt;-</span> pdsub<span class="sc">$</span>frontage <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Lake"</span>, <span class="st">"Pond"</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>f_bay <span class="ot">&lt;-</span> pdsub<span class="sc">$</span>frontage <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Bay"</span>, <span class="st">"Tampa Bay"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>f_gom <span class="ot">&lt;-</span> pdsub<span class="sc">$</span>frontage <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Gulf of Mexico"</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>f_other <span class="ot">&lt;-</span> pdsub<span class="sc">$</span>frontage <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"None"</span>, <span class="st">"Canal/River"</span>, <span class="st">"Golf Course"</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>pdsub<span class="sc">$</span>barrier_municipality <span class="ot">&lt;-</span> <span class="fu">if_else</span>(</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  pdsub<span class="sc">$</span>site_city <span class="sc">%in%</span> <span class="fu">c</span>(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ST PETE BEACH"</span>, <span class="st">"TREASURE ISLAND"</span>, <span class="st">"MADEIRA BEACH"</span>, </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"INDIAN ROCKS BEACH"</span>, <span class="st">"REDINGTON SHORES"</span>, <span class="st">"BELLEAIR BEACH"</span>, </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"REDINGTON BEACH"</span>, <span class="st">"NORTH REDINGTON BEACH"</span>, <span class="st">"INDIAN SHORES"</span>, </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CLEARWATER BEACH"</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  ), </span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Barrier"</span>, </span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Non-Barrier"</span>, </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing =</span> <span class="cn">NA_character_</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Data Cleaning and Sample Selection</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Stage</th>
+<th style="text-align: right;">Observations</th>
+<th style="text-align: right;">Municipalities</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">After initial filters</td>
+<td style="text-align: right;">245477</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Final complete-case dataset</td>
+<td style="text-align: right;">245477</td>
+<td style="text-align: right;">27</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <p><strong>Table 1a. Property Characteristics</strong></p>
 <table class="table">
 <colgroup>
-<col style="width: 13%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 17%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Variable</th>
+<th style="text-align: left;">Variable</th>
 <th style="text-align: right;">N</th>
 <th style="text-align: right;">Mean</th>
 <th style="text-align: right;">SD</th>
@@ -400,40 +700,40 @@ Table&nbsp;1: Summary of Model Variables, Types, and Coding
 </thead>
 <tbody>
 <tr class="odd">
-<td>Sale Price (Dollars)</td>
-<td style="text-align: right;">267074</td>
-<td style="text-align: right;">1.1939187^{5}</td>
-<td style="text-align: right;">1.5525905^{5}</td>
+<td style="text-align: left;">Adjusted Sale Price ($)</td>
+<td style="text-align: right;">245477</td>
+<td style="text-align: right;">1.186635^{5}</td>
+<td style="text-align: right;">1.5529677^{5}</td>
 <td style="text-align: right;">82.2</td>
 <td style="text-align: right;">1.8872377^{7}</td>
 </tr>
 <tr class="even">
-<td>Log Sale Price</td>
-<td style="text-align: right;">267074</td>
-<td style="text-align: right;">11.32</td>
+<td style="text-align: left;">Log Sale Price</td>
+<td style="text-align: right;">245477</td>
+<td style="text-align: right;">11.31</td>
 <td style="text-align: right;">0.89</td>
 <td style="text-align: right;">4.41</td>
 <td style="text-align: right;">16.75</td>
 </tr>
 <tr class="odd">
-<td>Sale Year*</td>
-<td style="text-align: right;">267074</td>
-<td style="text-align: right;">2006</td>
-<td style="text-align: right;">*</td>
+<td style="text-align: left;">Sale Year</td>
+<td style="text-align: right;">245477</td>
+<td style="text-align: right;">2006.91</td>
+<td style="text-align: right;">4.9</td>
 <td style="text-align: right;">2000</td>
-<td style="text-align: right;">2016</td>
+<td style="text-align: right;">2015</td>
 </tr>
 <tr class="even">
-<td>Heated Area (sq. ft.)</td>
-<td style="text-align: right;">267074</td>
-<td style="text-align: right;">1586.47</td>
-<td style="text-align: right;">779.7</td>
+<td style="text-align: left;">Heated Area (sq. ft.)</td>
+<td style="text-align: right;">245477</td>
+<td style="text-align: right;">1585.8</td>
+<td style="text-align: right;">785.63</td>
 <td style="text-align: right;">252</td>
 <td style="text-align: right;">1.9578^{4}</td>
 </tr>
 <tr class="odd">
-<td>Acreage</td>
-<td style="text-align: right;">267074</td>
+<td style="text-align: left;">Acreage</td>
+<td style="text-align: right;">245477</td>
 <td style="text-align: right;">0.21</td>
 <td style="text-align: right;">0.22</td>
 <td style="text-align: right;">0</td>
@@ -446,60 +746,60 @@ Table&nbsp;1: Summary of Model Variables, Types, and Coding
 <table class="table">
 <thead>
 <tr class="header">
-<th>Variable</th>
-<th>Category</th>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Category</th>
 <th style="text-align: right;">N</th>
 <th style="text-align: right;">Percent (%)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Quality</td>
-<td>Fair</td>
-<td style="text-align: right;">23657</td>
-<td style="text-align: right;">8.86</td>
+<td style="text-align: left;">Quality</td>
+<td style="text-align: left;">Fair</td>
+<td style="text-align: right;">22072</td>
+<td style="text-align: right;">8.99</td>
 </tr>
 <tr class="even">
-<td></td>
-<td>Average (Reference)</td>
-<td style="text-align: right;">206757</td>
-<td style="text-align: right;">77.42</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Average (Reference)</td>
+<td style="text-align: right;">189535</td>
+<td style="text-align: right;">77.21</td>
 </tr>
 <tr class="odd">
-<td></td>
-<td>Above Average</td>
-<td style="text-align: right;">36660</td>
-<td style="text-align: right;">13.73</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Above Average</td>
+<td style="text-align: right;">33870</td>
+<td style="text-align: right;">13.8</td>
 </tr>
 <tr class="even">
-<td>Stories</td>
-<td>1 (Reference)</td>
-<td style="text-align: right;">236893</td>
-<td style="text-align: right;">78.69</td>
+<td style="text-align: left;">Stories</td>
+<td style="text-align: left;">1 (Reference)</td>
+<td style="text-align: right;">217605</td>
+<td style="text-align: right;">88.65</td>
 </tr>
 <tr class="odd">
-<td></td>
-<td>2</td>
-<td style="text-align: right;">26603</td>
-<td style="text-align: right;">8.84</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">24535</td>
+<td style="text-align: right;">9.99</td>
 </tr>
 <tr class="even">
-<td></td>
-<td>3+</td>
-<td style="text-align: right;">3578</td>
-<td style="text-align: right;">1.19</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">3+</td>
+<td style="text-align: right;">3337</td>
+<td style="text-align: right;">1.36</td>
 </tr>
 <tr class="odd">
-<td>Foundation</td>
-<td>No (Reference)</td>
-<td style="text-align: right;">14378</td>
-<td style="text-align: right;">5.69</td>
+<td style="text-align: left;">Foundation</td>
+<td style="text-align: left;">No (Reference)</td>
+<td style="text-align: right;">13405</td>
+<td style="text-align: right;">5.46</td>
 </tr>
 <tr class="even">
-<td></td>
-<td>Yes</td>
-<td style="text-align: right;">252696</td>
-<td style="text-align: right;">94.62</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;">232072</td>
+<td style="text-align: right;">94.54</td>
 </tr>
 </tbody>
 </table>
@@ -508,42 +808,48 @@ Table&nbsp;1: Summary of Model Variables, Types, and Coding
 <table class="table">
 <thead>
 <tr class="header">
-<th>Variable</th>
-<th>Category</th>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Category</th>
 <th style="text-align: right;">N</th>
 <th style="text-align: right;">Percent (%)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Frontage</td>
-<td>Other (Reference)</td>
-<td style="text-align: right;">255944</td>
-<td style="text-align: right;">95.83</td>
+<td style="text-align: left;">Frontage</td>
+<td style="text-align: left;">None (Reference)</td>
+<td style="text-align: right;">223397</td>
+<td style="text-align: right;">91.01</td>
 </tr>
 <tr class="even">
-<td></td>
-<td>Lake</td>
-<td style="text-align: right;">5996</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Lake</td>
+<td style="text-align: right;">5513</td>
 <td style="text-align: right;">2.25</td>
 </tr>
 <tr class="odd">
-<td></td>
-<td>Bay</td>
-<td style="text-align: right;">4393</td>
-<td style="text-align: right;">1.64</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Bay</td>
+<td style="text-align: right;">4092</td>
+<td style="text-align: right;">1.67</td>
 </tr>
 <tr class="even">
-<td>Sea Wall</td>
-<td>No (Reference)</td>
-<td style="text-align: right;">252464</td>
-<td style="text-align: right;">94.53</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Other</td>
+<td style="text-align: right;">12475</td>
+<td style="text-align: right;">5.08</td>
 </tr>
 <tr class="odd">
-<td></td>
-<td>Yes</td>
-<td style="text-align: right;">14610</td>
-<td style="text-align: right;">5.47</td>
+<td style="text-align: left;">Sea Wall</td>
+<td style="text-align: left;">No (Reference)</td>
+<td style="text-align: right;">231985</td>
+<td style="text-align: right;">94.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;">13492</td>
+<td style="text-align: right;">5.5</td>
 </tr>
 </tbody>
 </table>
@@ -551,36 +857,36 @@ Table&nbsp;1: Summary of Model Variables, Types, and Coding
 <p><strong>Table 1d. Regional Characteristics</strong></p>
 <table class="table">
 <colgroup>
-<col style="width: 21%">
-<col style="width: 21%">
-<col style="width: 28%">
-<col style="width: 28%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Variable</th>
-<th>Category</th>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Category</th>
 <th style="text-align: right;">N</th>
 <th style="text-align: right;">Percent (%)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Barrier Island Municipality</td>
-<td>Non-barrier (Reference)</td>
-<td style="text-align: right;">257520</td>
-<td style="text-align: right;">96.42</td>
+<td style="text-align: left;">Barrier Island Municipality</td>
+<td style="text-align: left;">Non-Barrier (Reference)</td>
+<td style="text-align: right;">236570</td>
+<td style="text-align: right;">96.37</td>
 </tr>
 <tr class="even">
-<td></td>
-<td>Barrier island</td>
-<td style="text-align: right;">9554</td>
-<td style="text-align: right;">3.58</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Barrier</td>
+<td style="text-align: right;">8907</td>
+<td style="text-align: right;">3.63</td>
 </tr>
 <tr class="odd">
-<td>Site City</td>
-<td>Number of cities</td>
-<td style="text-align: right;">28</td>
+<td style="text-align: left;">Site City</td>
+<td style="text-align: left;">Number of Cities</td>
+<td style="text-align: right;">27</td>
 <td style="text-align: right;">*</td>
 </tr>
 </tbody>
@@ -589,16 +895,16 @@ Table&nbsp;1: Summary of Model Variables, Types, and Coding
 <p><strong>Table 1e. Distance Characteristics</strong></p>
 <table class="table">
 <colgroup>
-<col style="width: 13%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 17%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Variable</th>
+<th style="text-align: left;">Variable</th>
 <th style="text-align: right;">N</th>
 <th style="text-align: right;">Mean</th>
 <th style="text-align: right;">SD</th>
@@ -608,18 +914,18 @@ Table&nbsp;1: Summary of Model Variables, Types, and Coding
 </thead>
 <tbody>
 <tr class="odd">
-<td>CCCL Distance (meters)</td>
-<td style="text-align: right;">267074</td>
-<td style="text-align: right;">7780.85</td>
-<td style="text-align: right;">3931.37</td>
+<td style="text-align: left;">CCCL Distance (meters)</td>
+<td style="text-align: right;">245477</td>
+<td style="text-align: right;">7781.07</td>
+<td style="text-align: right;">3929.47</td>
 <td style="text-align: right;">0.01</td>
-<td style="text-align: right;">1.878388^{4}</td>
+<td style="text-align: right;">1.871481^{4}</td>
 </tr>
 <tr class="even">
-<td>Tampa Bay Distance (meters)</td>
-<td style="text-align: right;">267074</td>
-<td style="text-align: right;">6791.5</td>
-<td style="text-align: right;">4397.77</td>
+<td style="text-align: left;">Tampa Bay Distance (meters)</td>
+<td style="text-align: right;">245477</td>
+<td style="text-align: right;">6788.04</td>
+<td style="text-align: right;">4396.19</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">2.180717^{4}</td>
 </tr>
