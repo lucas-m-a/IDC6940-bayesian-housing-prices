@@ -254,6 +254,12 @@ window.Quarto = {
 <h4 class="anchored" data-anchor-id="exploratory-data-analysis">Exploratory Data Analysis</h4>
 <section id="variable-definitions" class="level5">
 <h5 class="anchored" data-anchor-id="variable-definitions">Variable Definitions</h5>
+<div id="tbl-variables" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-variables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Summary of Model Variables, Types, and Coding
+</figcaption>
+<div aria-describedby="tbl-variables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table">
 <colgroup>
 <col style="width: 33%">
@@ -262,84 +268,87 @@ window.Quarto = {
 </colgroup>
 <thead>
 <tr class="header">
-<th>Variable</th>
-<th>Role / type</th>
-<th>Definition and coding</th>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Variable Type</th>
+<th style="text-align: left;">Definition and coding</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>log_price</code></td>
-<td>Response; continuous</td>
-<td>Natural logarithm of adjusted sale price (<code>log(adj_price)</code> for positive adjusted prices).</td>
+<td style="text-align: left;"><code>log_price</code></td>
+<td style="text-align: left;">Continuous (<span class="math inline">\(\text{Log-USD}\)</span>)</td>
+<td style="text-align: left;"><strong>Dependent Variable:</strong> Natural logarithm of the adjusted sale price (<span class="math inline">\(Y\)</span>), adjusted by the Case-Shiller Tampa Bay home price index.</td>
 </tr>
 <tr class="even">
-<td><code>sale_year_c</code></td>
-<td>Predictor; continuous</td>
-<td>Sale year centered at 2000 (<code>sale_year - 2000</code>); one unit represents one additional year.</td>
+<td style="text-align: left;"><code>sale_year_c</code></td>
+<td style="text-align: left;">Continuous (Years)</td>
+<td style="text-align: left;"><strong>Temporal Trend:</strong> Sale year centered at 2000 (<span class="math inline">\(\text{sale\_year} - 2000\)</span>); one unit represents one additional elapsed year.</td>
 </tr>
 <tr class="odd">
-<td><code>frontage_group</code></td>
-<td>Predictor; categorical</td>
-<td>Frontage category: None (reference), Lake, Bay, Gulf of Mexico, or Other.</td>
+<td style="text-align: left;"><code>frontage_group</code></td>
+<td style="text-align: left;">Categorical Factor</td>
+<td style="text-align: left;"><strong>Coastal Access:</strong> Waterfront frontage classification, categorized as <em>None</em> (reference category), <em>Lake</em>, <em>Bay</em>, or <em>Other</em>.</td>
 </tr>
 <tr class="even">
-<td><code>seawall_group</code></td>
-<td>Predictor; binary categorical</td>
-<td>Seawall status: No (reference) or Yes. Unknown/unrecognized source labels are left missing and removed by complete-case filtering.</td>
+<td style="text-align: left;"><code>seawall_group</code></td>
+<td style="text-align: left;">Binary Indicator</td>
+<td style="text-align: left;"><strong>Structural Control:</strong> Seawall status: <em>No</em> (reference category) or <em>Yes</em>.</td>
 </tr>
 <tr class="odd">
-<td><code>cccl_distance</code> / <code>cccl_distance_b</code></td>
-<td>Predictor; continuous</td>
-<td>Distance to the Coastal Construction Control Line. OLS uses <code>cccl_distance</code>; Bayesian models use standardized <code>cccl_distance_b</code>.</td>
+<td style="text-align: left;"><code>cccl_distance_b</code></td>
+<td style="text-align: left;">Continuous (Meters)</td>
+<td style="text-align: left;"><strong>Coastal Proximity:</strong> Distance to the Coastal Construction Control Line (CCCL). This variable is standardized in each model.</td>
 </tr>
 <tr class="even">
-<td><code>tb_distance</code> / <code>tb_distance_b</code></td>
-<td>Predictor; continuous</td>
-<td>Distance to Tampa Bay. OLS uses <code>tb_distance</code>; Bayesian models use standardized <code>tb_distance_b</code>.</td>
+<td style="text-align: left;"><code>tb_distance_b</code></td>
+<td style="text-align: left;">Continuous (Meters)</td>
+<td style="text-align: left;"><strong>Coastal Proximity:</strong> Distance to Tampa Bay. This variable is standardized in each model.</td>
 </tr>
 <tr class="odd">
-<td><code>quality_group</code></td>
-<td>Predictor; categorical</td>
-<td>Fair (Minimal and Fair source categories), Average (reference), or Above Average (Superior, Excellent, and Above Average source categories).</td>
+<td style="text-align: left;"><code>quality_group</code></td>
+<td style="text-align: left;">Categorical Factor</td>
+<td style="text-align: left;"><strong>Structural Control:</strong> Construction quality rating grouped into <em>Fair</em>, <em>Average</em> (reference category), and <em>Above Average</em>.</td>
 </tr>
 <tr class="even">
-<td><code>heated_area</code> / <code>heated_area_b</code></td>
-<td>Predictor; continuous</td>
-<td>Heated living area in the source data. Bayesian models use standardized <code>heated_area_b</code>.</td>
+<td style="text-align: left;"><code>heated_area</code></td>
+<td style="text-align: left;">Continuous (Square Feet)</td>
+<td style="text-align: left;"><strong>Structural Control:</strong> Total heated living area.</td>
 </tr>
 <tr class="odd">
-<td><code>acreage</code> / <code>acreage_b</code></td>
-<td>Predictor; continuous</td>
-<td>Property acreage. Bayesian models use standardized <code>acreage_b</code>.</td>
+<td style="text-align: left;"><code>acreage_b</code></td>
+<td style="text-align: left;">Continuous (Acres)</td>
+<td style="text-align: left;"><strong>Structural Control:</strong> Property acreage. This variable is standardized in each model.</td>
 </tr>
 <tr class="even">
-<td><code>barrier_municipality</code></td>
-<td>Predictor; binary categorical</td>
-<td>Barrier or Non-Barrier (reference), based on the municipality list defined in the code.</td>
+<td style="text-align: left;"><code>barrier_municipality</code></td>
+<td style="text-align: left;">Binary Indicator</td>
+<td style="text-align: left;"><strong>Regional Control:</strong> Coastal municipality classification as <em>Non-Barrier</em> (reference category) or <em>Barrier Island Municipality</em>.</td>
 </tr>
 <tr class="odd">
-<td><code>stories_group</code></td>
-<td>Predictor; categorical</td>
-<td>Number of stories grouped as 1 (reference), 2, or 3+.</td>
+<td style="text-align: left;"><code>stories_group</code></td>
+<td style="text-align: left;">Categorical Factor</td>
+<td style="text-align: left;"><strong>Structural Control:</strong> Building story count categorized as <em>1</em> (reference category), <em>2</em>, or <em>3+</em>.</td>
 </tr>
 <tr class="even">
-<td><code>foundation_group</code></td>
-<td>Predictor; binary categorical</td>
-<td>Yes if the source foundation text contains “CONTINUOUS”; otherwise No for nonmissing labels. No is the reference category.</td>
+<td style="text-align: left;"><code>foundation_group</code></td>
+<td style="text-align: left;">Binary Indicator</td>
+<td style="text-align: left;"><strong>Structural Control:</strong> Continuous footing foundation presence indicator. <em>Yes</em> if the house contains continuous concrete, and <em>No</em> (reference category) otherwise.</td>
 </tr>
 <tr class="odd">
-<td><code>site_city</code></td>
-<td>Hierarchical grouping variable</td>
-<td>Municipality identifier used for the varying intercept in both Bayesian models; not a fixed-effect predictor.</td>
+<td style="text-align: left;"><code>site_city</code></td>
+<td style="text-align: left;">Hierarchical Factor</td>
+<td style="text-align: left;"><strong>Spatial Grouping:</strong> City identifier utilized as a varying-intercept group effect for Bayesian municipality models. This is included as a normal predictor in OLS.</td>
 </tr>
 <tr class="even">
-<td><code>x_coord</code>, <code>y_coord</code></td>
-<td>Spatial coordinates</td>
-<td>Coordinates used to construct the spatial-neighbor graph; not included as regression predictors. If coordinates are longitude/latitude, they are projected to UTM Zone 17N for neighbor calculations.</td>
+<td style="text-align: left;"><code>x_coord</code>, <code>y_coord</code></td>
+<td style="text-align: left;">Continuous (UTM Meters)</td>
+<td style="text-align: left;"><strong>Spatial Coordinates:</strong> Projected spatial coordinates (UTM Zone 17N) in meters utilized for constructing the spatial distance matrix and SPDE latent field mesh.</td>
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 </section>
 </section>
 <section id="descriptive-tables" class="level4">
