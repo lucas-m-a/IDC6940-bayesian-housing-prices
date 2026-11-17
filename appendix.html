@@ -83,7 +83,208 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Appendix</p>
+<p><strong>Table 1b. Categorical Property Characteristics</strong></p>
+<table class="table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Category</th>
+<th style="text-align: right;">N</th>
+<th style="text-align: right;">Percent (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Quality</td>
+<td style="text-align: left;">Fair</td>
+<td style="text-align: right;"><code>r sum(model_data$quality_group == "Fair")</code></td>
+<td style="text-align: right;"><code>r round(100*mean(model_data$quality_group == "Fair"), 2)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Average (Reference)</td>
+<td style="text-align: right;"><code>r sum(model_data$quality_group == "Average")</code></td>
+<td style="text-align: right;"><code>r round(100*mean(model_data$quality_group == "Average"), 2)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Above Average</td>
+<td style="text-align: right;"><code>r sum(model_data$quality_group == "Above Average")</code></td>
+<td style="text-align: right;"><code>r round(100*mean(model_data$quality_group == "Above Average"), 2)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Stories</td>
+<td style="text-align: left;">1 (Reference)</td>
+<td style="text-align: right;"><code>r sum(model_data$stories_group == "1")</code></td>
+<td style="text-align: right;"><code>r round(100*mean(model_data$stories_group == "1"), 2)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: right;"><code>r sum(model_data$stories_group == "2")</code></td>
+<td style="text-align: right;"><code>r round(100*mean(model_data$stories_group == "2"), 2)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">3+</td>
+<td style="text-align: right;"><code>r sum(model_data$stories_group == "3+")</code></td>
+<td style="text-align: right;"><code>r round(100*mean(model_data$stories_group == "3+"), 2)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Foundation</td>
+<td style="text-align: left;">No (Reference)</td>
+<td style="text-align: right;"><code>r sum(model_data$foundation_group == "No")</code></td>
+<td style="text-align: right;"><code>r round(100*mean(model_data$foundation_group == "No"), 2)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;"><code>r sum(model_data$foundation_group == "Yes")</code></td>
+<td style="text-align: right;"><code>r round(100*mean(model_data$foundation_group == "Yes"), 2)</code></td>
+</tr>
+</tbody>
+</table>
+<p>The categorical property characteristics table summarizes the distributions of property characteristics including quality, number of stories, and foundation type. Property quality was grouped from the original data in that ratings were combined such that minimal and fair quality became fair, average remained average and serves as the reference category, and superior, excellent and above average were combined to Above Average. Denominators used in calculating percentages reflect the total number of non missing observations.</p>
+<p><strong>Table 1c. Waterfront Characteristics</strong></p>
+<table class="table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Category</th>
+<th style="text-align: right;">N</th>
+<th style="text-align: right;">Percent (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Frontage</td>
+<td style="text-align: left;">None (Reference)</td>
+<td style="text-align: right;"><code>r sum(model_data$frontage_group == "None")</code></td>
+<td style="text-align: right;"><code>r round(100*mean(model_data$frontage_group == "None"), 2)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Lake</td>
+<td style="text-align: right;"><code>r sum(model_data$frontage_group == "Lake")</code></td>
+<td style="text-align: right;"><code>r round(100*mean(model_data$frontage_group == "Lake"), 2)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Bay</td>
+<td style="text-align: right;"><code>r sum(model_data$frontage_group == "Bay")</code></td>
+<td style="text-align: right;"><code>r round(100*mean(model_data$frontage_group == "Bay"), 2)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Other</td>
+<td style="text-align: right;"><code>r sum(model_data$frontage_group == "Other")</code></td>
+<td style="text-align: right;"><code>r round(100*mean(model_data$frontage_group == "Other"), 2)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sea Wall</td>
+<td style="text-align: left;">No (Reference)</td>
+<td style="text-align: right;"><code>r sum(model_data$seawall_group == "No")</code></td>
+<td style="text-align: right;"><code>r round(100*mean(model_data$seawall_group == "No"), 2)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;"><code>r sum(model_data$seawall_group == "Yes")</code></td>
+<td style="text-align: right;"><code>r round(100*mean(model_data$seawall_group == "Yes"), 2)</code></td>
+</tr>
+</tbody>
+</table>
+<p>The waterfront characteristics table shows the distribution of properties by waterfront frontage type. Properties are distinguished by lakes, bays, Gulf of Mexico, and other. The original data was combined such that lake and pond entries became lake, bay and tampa bay became bay, Gulf of Mexico stayed Gulf of Mexico, and golf course and river/canal became other. This table also summarizes seawall prevalence, reporting the number and percentage of properties with and without a seawall.</p>
+<p><strong>Table 1d. Regional Characteristics</strong></p>
+<table class="table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Category</th>
+<th style="text-align: right;">N</th>
+<th style="text-align: right;">Percent (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Barrier Island Municipality</td>
+<td style="text-align: left;">Non-Barrier (Reference)</td>
+<td style="text-align: right;"><code>r sum(model_data$barrier_municipality == "Non-Barrier")</code></td>
+<td style="text-align: right;"><code>r round(100*mean(model_data$barrier_municipality == "Non-Barrier"), 2)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Barrier</td>
+<td style="text-align: right;"><code>r sum(model_data$barrier_municipality == "Barrier")</code></td>
+<td style="text-align: right;"><code>r round(100*mean(model_data$barrier_municipality == "Barrier"), 2)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Site City</td>
+<td style="text-align: left;">Number of Cities</td>
+<td style="text-align: right;"><code>r nlevels(model_data$site_city)</code></td>
+<td style="text-align: right;">*</td>
+</tr>
+</tbody>
+</table>
+<p>The regional characteristics table summarizes the distribution of municipalites by barrier island status, including the number and percentage of observations located in a barrier island or non-barrier island municipality. It also reports the total number of distinct cities represented in the study sample.</p>
+<p><strong>Table 1e. Distance Characteristics</strong></p>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: right;">N</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">SD</th>
+<th style="text-align: right;">Min</th>
+<th style="text-align: right;">Max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CCCL Distance (meters)</td>
+<td style="text-align: right;"><code>r sum(!is.na(model_data$cccl_distance))</code></td>
+<td style="text-align: right;"><code>r round(mean(model_data$cccl_distance, na.rm=TRUE), 2)</code></td>
+<td style="text-align: right;"><code>r round(sd(model_data$cccl_distance, na.rm=TRUE), 2)</code></td>
+<td style="text-align: right;"><code>r round(min(model_data$cccl_distance, na.rm=TRUE), 2)</code></td>
+<td style="text-align: right;"><code>r round(max(model_data$cccl_distance, na.rm=TRUE), 2)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tampa Bay Distance (meters)</td>
+<td style="text-align: right;"><code>r sum(!is.na(model_data$tb_distance))</code></td>
+<td style="text-align: right;"><code>r round(mean(model_data$tb_distance, na.rm=TRUE), 2)</code></td>
+<td style="text-align: right;"><code>r round(sd(model_data$tb_distance, na.rm=TRUE), 2)</code></td>
+<td style="text-align: right;"><code>r round(min(model_data$tb_distance, na.rm=TRUE), 2)</code></td>
+<td style="text-align: right;"><code>r round(max(model_data$tb_distance, na.rm=TRUE), 2)</code></td>
+</tr>
+</tbody>
+</table>
+<p>The distance characteristics table presents descriptive statistics for the geographic distance variables including distance to the Coastal Construction Control Line (CCCL) and Tampa Bay. For each variable the table reports the number of nonmissing observations, mean, standard deviation,and minimum and maximum distances in miles.</p>
 
 
 
